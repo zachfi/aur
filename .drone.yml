@@ -1,13 +1,67 @@
+---
+depends_on: []
 kind: pipeline
-name: ci
+name: ci-x86_64
 steps:
 - commands:
-  - make repo
-  image: zachfi/shell:archlinux
-  name: repo
-  pull: always
+  - sudo chown -R makepkg /repo
+  - sudo chown -R makepkg /drone
+  - git submodule init
+  - git submodule update
+  image: zachfi/shell:latest
+  name: init-repo-x86_64
+  volumes:
+  - name: cache
+    path: /repo/x86_64
 - commands:
-  - make imar
-  image: zachfi/shell:archlinux
-  name: image
-  pull: always
+  - cd nodemanager-bin
+  - makepkg -c
+  environment:
+    CARCH: x86_64
+    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
+      !autodeps)
+  image: zachfi/shell:latest
+  name: build-pkg-nodemanager-bin
+  volumes:
+  - name: cache
+    path: /repo/x86_64
+- commands:
+  - cp nodemanager-bin/*x86_64*.pkg.tar.zst /repo/x86_64
+  - rm /repo/x86_64/*-debug-*
+  - repo-add /repo/x86_64/custom.db.tar.gz /repo/x86_64/*pkg.tar.zst
+  environment:
+    CARCH: x86_64
+    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
+      !autodeps)
+  image: zachfi/shell:latest
+  name: make-repo-x86_64
+  volumes:
+  - name: cache
+    path: /repo/x86_64
+- commands:
+  - sudo docker build -t zachfi/aur:x86_64 -f Dockerfile /repo/x86_64
+  image: zachfi/shell:latest
+  name: build-image-x86_64
+  volumes:
+  - name: cache
+    path: /repo/x86_64
+  - name: dockersock
+    path: /var/run/docker.sock
+- commands:
+  - sudo docker push zachfi/aur:x86_64
+  image: zachfi/shell:latest
+  name: build-image-x86_64
+  volumes:
+  - name: cache
+    path: /repo/x86_64
+  - name: dockersock
+    path: /var/run/docker.sock
+  when:
+    branch:
+    - main
+volumes:
+- name: cache
+  temp: {}
+- host:
+    path: /var/run/docker.sock
+  name: dockersock

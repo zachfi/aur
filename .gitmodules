@@ -16,3 +16,6 @@
 [submodule "libnvidia-container"]
 	path = libnvidia-container
 	url = https://aur.archlinux.org/libnvidia-container.git
+[submodule "nodemanager-bin"]
+	path = nodemanager-bin
+	url = https://github.com/zachfi/nodemanager-bin.git

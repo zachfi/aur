@@ -1,3 +1,2 @@
 FROM nginx:alpine
-ARG arch
-COPY repo/$arch/ /usr/share/nginx/html/
+COPY . /usr/share/nginx/html/
