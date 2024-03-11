@@ -2,6 +2,9 @@ kind: pipeline
 name: ci
 steps:
 - commands:
+  - whoami
+  - pwd
+  - ls -ld
   - make repo
   image: zachfi/shell:archlinux
   name: repo

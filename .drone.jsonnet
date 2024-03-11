@@ -9,6 +9,9 @@
       image: 'zachfi/shell:archlinux',
       pull: 'always',
       commands: [
+        'whoami',
+        'pwd',
+        'ls -ld',
         'make repo',
       ],
     },
