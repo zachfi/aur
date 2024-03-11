@@ -21,7 +21,7 @@
       image: 'zachfi/shell:archlinux',
       pull: 'always',
       commands: [
-        'make imar',
+        'make image',
       ],
     },
   ],
