@@ -6,7 +6,7 @@
   steps: [
     {
       name: 'repo',
-      image: 'zachfi/build-image',
+      image: 'zachfi/shell:archlinux',
       pull: 'always',
       commands: [
         'make repo',
@@ -14,7 +14,7 @@
     },
     {
       name: 'image',
-      image: 'zachfi/build-image',
+      image: 'zachfi/shell:archlinux',
       pull: 'always',
       commands: [
         'make imar',
