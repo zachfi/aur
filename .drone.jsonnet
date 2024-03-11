@@ -12,6 +12,7 @@
         'whoami',
         'pwd',
         'ls -ld',
+        'ls -l',
         'make repo',
       ],
     },

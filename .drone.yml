@@ -5,6 +5,7 @@ steps:
   - whoami
   - pwd
   - ls -ld
+  - ls -l
   - make repo
   image: zachfi/shell:archlinux
   name: repo
