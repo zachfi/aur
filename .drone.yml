@@ -1,0 +1,13 @@
+kind: pipeline
+name: ci
+steps:
+- commands:
+  - make repo
+  image: zachfi/build-image
+  name: repo
+  pull: always
+- commands:
+  - make imar
+  image: zachfi/build-image
+  name: image
+  pull: always
