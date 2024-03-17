@@ -3,6 +3,7 @@ name: ci
 steps:
 - commands:
   - sudo chown -R makepkg /drone
+  - sudo chown -R makepkg /repo
   environment:
     REPODIR: /repo
   image: zachfi/shell:archlinux
@@ -22,8 +23,6 @@ steps:
   - name: cache
     path: /repo
 - commands:
-  - sudo chown -R makepkg /drone
-  - make chown
   - make repo
   environment:
     REPODIR: /repo

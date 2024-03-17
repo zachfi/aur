@@ -25,6 +25,7 @@
       pull: 'always',
       commands: [
         'sudo chown -R makepkg /drone',
+        'sudo chown -R makepkg /repo',
       ],
     },
     this.withRepoCache()
@@ -42,8 +43,6 @@
       image: 'zachfi/shell:archlinux',
       pull: 'always',
       commands: [
-        'sudo chown -R makepkg /drone',
-        'make chown',
         'make repo',
       ],
     },
