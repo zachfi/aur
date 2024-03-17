@@ -1,3 +1,4 @@
 FROM nginx:alpine
 ARG arch
-COPY repo/$arch/ /usr/share/nginx/html/
+ARG repodir
+COPY $repodir/$arch/ /usr/share/nginx/html/

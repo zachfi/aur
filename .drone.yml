@@ -2,12 +2,62 @@ kind: pipeline
 name: ci
 steps:
 - commands:
+  - sudo chown -R makepkg /drone
+  - sudo chown -R makepkg /repo
+  environment:
+    REPODIR: /repo
+  image: zachfi/shell:latest
+  name: chown
+  pull: always
+  volumes:
+  - name: cache
+    path: /repo
+- commands:
+  - make modules
+  environment:
+    REPODIR: /repo
+  image: zachfi/shell:latest
+  name: submodules
+  pull: always
+  volumes:
+  - name: cache
+    path: /repo
+- commands:
   - make repo
-  image: zachfi/shell:archlinux
+  environment:
+    REPODIR: /repo
+  image: zachfi/shell:latest
   name: repo
   pull: always
+  volumes:
+  - name: cache
+    path: /repo
 - commands:
-  - make imar
-  image: zachfi/shell:archlinux
+  - make image
+  environment:
+    REPODIR: /repo
+  image: zachfi/shell:latest
   name: image
   pull: always
+  volumes:
+  - name: cache
+    path: /repo
+- commands:
+  - make publish
+  environment:
+    REPODIR: /repo
+  image: zachfi/shell:latest
+  name: publish
+  pull: always
+  volumes:
+  - name: cache
+    path: /repo
+  when:
+    branch:
+    - main
+trigger:
+  event:
+  - push
+volumes:
+- name: cache
+  temp: {}
