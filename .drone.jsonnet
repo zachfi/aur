@@ -15,6 +15,12 @@
         'ls -l',
         'make repo',
       ],
+      volumes: [
+        {
+          name: 'cache',
+          path: '/repo',
+        },
+      ],
     },
     {
       name: 'image',
@@ -25,4 +31,5 @@
       ],
     },
   ],
+  volumes: [{ name: 'cache', temp: {} }],
 }

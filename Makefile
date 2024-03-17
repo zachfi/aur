@@ -4,8 +4,10 @@ archs = x86_64 armv7h aarch64
 pkgs = nodemanager-bin
 subs = duo_unix gomplate-bin k3s-bin libnvidia-container nvidia-container-runtime nvidia-container-toolkit
 
+REPODIR ?= $(shell pwd)/repo
+
 clean:
-	@rm -rf repo/
+	@rm -rf repo/*
 	@rm -f */*.pkg.tar.zst
 
 docker-%:
@@ -41,6 +43,7 @@ image:
 publish:
 	@for r in $(archs); do docker push zachfi/aur:$$r; done
 
+.PHONY: drone
 drone:
 	@drone jsonnet --format
 	@drone lint

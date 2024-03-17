@@ -10,8 +10,14 @@ steps:
   image: zachfi/shell:archlinux
   name: repo
   pull: always
+  volumes:
+  - name: cache
+    path: /repo
 - commands:
-  - make imar
+  - make image
   image: zachfi/shell:archlinux
   name: image
   pull: always
+volumes:
+- name: cache
+  temp: {}
