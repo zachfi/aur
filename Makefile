@@ -13,20 +13,15 @@ clean:
 	@rm -f */*.pkg.tar.zst
 
 modules:
-	git submodule init
-	git submodule update
+	@git submodule init
+	@git submodule update
 
 chown:
 	@sudo chown -R makepkg $(REPODIR)/
 
-docker-%:
-
 .PHONY: packages-%
 packages-%:
 	@for pkg in $(pkgs); do pushd $$pkg; CARCH=$* OPTIONS=$(OPTIONS) makepkg -c; popd; done
-
-#$(archs):
-#	@for pkg in $(pkgs); do pushd $$pkg; makepkg -c; popd;  done
 
 .PHONY: repo-%
 repo-%:
