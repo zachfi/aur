@@ -15,6 +15,9 @@
         'ls -l',
         'make repo',
       ],
+      environment: {
+        REPODIR: '/repo',
+      },
       volumes: [
         {
           name: 'cache',

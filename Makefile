@@ -7,7 +7,7 @@ subs = duo_unix gomplate-bin k3s-bin libnvidia-container nvidia-container-runtim
 REPODIR ?= $(shell pwd)/repo
 
 clean:
-	@rm -rf repo/*
+	@rm -rf $(REPODIR)/*
 	@rm -f */*.pkg.tar.zst
 
 docker-%:
@@ -21,11 +21,11 @@ packages-%:
 
 .PHONY: repo-%
 repo-%:
-	@mkdir repo/$*
+	@mkdir $(REPODIR)/$*
 	@$(MAKE) packages-$*
 	@cp */*$*.pkg.tar.zst repo/$*
-	@find repo/$* -name "*-debug-*" -exec rm {} \;
-	@repo-add repo/$*/custom.db.tar.gz repo/$*/*pkg.tar.zst
+	@find $(REPODIR)/$* -name "*-debug-*" -exec rm {} \;
+	@repo-add $(REPODIR)/$*/custom.db.tar.gz $(REPODIR)/$*/*pkg.tar.zst
 
 .PHONY: docker-%
 docker-%:
@@ -33,7 +33,7 @@ docker-%:
 
 .PHONY: repo
 repo: clean
-	@mkdir repo/
+	@mkdir $(REPODIR)/
 	@for r in $(archs); do $(MAKE) repo-$$r; done
 
 .PHONY: image
