@@ -32,7 +32,7 @@ packages-%:
 repo-%:
 	@mkdir $(REPODIR)/$*
 	@$(MAKE) packages-$*
-	@cp */*$*.pkg.tar.zst repo/$*
+	@cp */*$*.pkg.tar.zst $(REPODIR)/$*
 	@find $(REPODIR)/$* -name "*-debug-*" -exec rm {} \;
 	@repo-add $(REPODIR)/$*/custom.db.tar.gz $(REPODIR)/$*/*pkg.tar.zst
 
