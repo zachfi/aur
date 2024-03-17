@@ -26,7 +26,7 @@
         'pwd',
         'ls -ld',
         'ls -l',
-        'ls -l /repo',
+        'ls -ld /repo',
         'make repo',
       ],
     },
