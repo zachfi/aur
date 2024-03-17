@@ -1,7 +1,9 @@
 {
   local this = self,
 
-  withRepoCache(dir='/repo'):: {
+  local repoDir = '/repo',
+
+  withRepoCache(dir=repoDir):: {
     environment: {
       REPODIR: dir,
     },
@@ -16,7 +18,7 @@
   kind: 'pipeline',
   name: 'ci',
   steps: [
-    this.withRepoCache('/repo')
+    this.withRepoCache()
     {
       name: 'repo',
       image: 'zachfi/shell:archlinux',
@@ -27,10 +29,11 @@
         'ls -ld',
         'ls -l',
         'ls -ld /repo',
+        'sudo chown -R makepkg %s' % repoDir,
         'make repo',
       ],
     },
-    this.withRepoCache('/repo')
+    this.withRepoCache()
     {
       name: 'image',
       image: 'zachfi/shell:archlinux',

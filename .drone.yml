@@ -6,7 +6,8 @@ steps:
   - pwd
   - ls -ld
   - ls -l
-  - ls -l /repo
+  - ls -ld /repo
+  - sudo chown -R makepkg /repo
   - make repo
   environment:
     REPODIR: /repo
