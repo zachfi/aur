@@ -17,9 +17,14 @@ steps:
     path: /repo
 - commands:
   - make image
+  environment:
+    REPODIR: /repo
   image: zachfi/shell:archlinux
   name: image
   pull: always
+  volumes:
+  - name: cache
+    path: /repo
 volumes:
 - name: cache
   temp: {}

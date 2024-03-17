@@ -1,9 +1,22 @@
 {
   local this = self,
 
+  withRepoCache(dir='/repo'):: {
+    environment: {
+      REPODIR: dir,
+    },
+    volumes: [
+      {
+        name: 'cache',
+        path: dir,
+      },
+    ],
+  },
+
   kind: 'pipeline',
   name: 'ci',
   steps: [
+    this.withRepoCache('/repo')
     {
       name: 'repo',
       image: 'zachfi/shell:archlinux',
@@ -15,16 +28,8 @@
         'ls -l',
         'make repo',
       ],
-      environment: {
-        REPODIR: '/repo',
-      },
-      volumes: [
-        {
-          name: 'cache',
-          path: '/repo',
-        },
-      ],
     },
+    this.withRepoCache('/repo')
     {
       name: 'image',
       image: 'zachfi/shell:archlinux',
