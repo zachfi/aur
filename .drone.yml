@@ -3,7 +3,26 @@ name: ci
 steps:
 - commands:
   - sudo chown -R makepkg /drone
-  - git submodule
+  environment:
+    REPODIR: /repo
+  image: zachfi/shell:archlinux
+  name: chown
+  pull: always
+  volumes:
+  - name: cache
+    path: /repo
+- commands:
+  - make modules
+  environment:
+    REPODIR: /repo
+  image: zachfi/shell:archlinux
+  name: submodules
+  pull: always
+  volumes:
+  - name: cache
+    path: /repo
+- commands:
+  - sudo chown -R makepkg /drone
   - make chown
   - make repo
   environment:

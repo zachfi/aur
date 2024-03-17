@@ -10,6 +10,10 @@ clean:
 	@rm -rf $(REPODIR)/*
 	@rm -f */*.pkg.tar.zst
 
+modules:
+	git submodule init
+	git submodule update
+
 chown:
 	@sudo chown -R makepkg $(REPODIR)/
 

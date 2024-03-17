@@ -20,12 +20,29 @@
   steps: [
     this.withRepoCache()
     {
+      name: 'chown',
+      image: 'zachfi/shell:archlinux',
+      pull: 'always',
+      commands: [
+        'sudo chown -R makepkg /drone',
+      ],
+    },
+    this.withRepoCache()
+    {
+      name: 'submodules',
+      image: 'zachfi/shell:archlinux',
+      pull: 'always',
+      commands: [
+        'make modules',
+      ],
+    },
+    this.withRepoCache()
+    {
       name: 'repo',
       image: 'zachfi/shell:archlinux',
       pull: 'always',
       commands: [
         'sudo chown -R makepkg /drone',
-        'git submodule',
         'make chown',
         'make repo',
       ],
