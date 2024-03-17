@@ -6,7 +6,7 @@ steps:
   - sudo chown -R makepkg /repo
   environment:
     REPODIR: /repo
-  image: zachfi/shell:archlinux
+  image: zachfi/shell:latest
   name: chown
   pull: always
   volumes:
@@ -16,7 +16,7 @@ steps:
   - make modules
   environment:
     REPODIR: /repo
-  image: zachfi/shell:archlinux
+  image: zachfi/shell:latest
   name: submodules
   pull: always
   volumes:
@@ -26,7 +26,7 @@ steps:
   - make repo
   environment:
     REPODIR: /repo
-  image: zachfi/shell:archlinux
+  image: zachfi/shell:latest
   name: repo
   pull: always
   volumes:
@@ -36,7 +36,7 @@ steps:
   - make image
   environment:
     REPODIR: /repo
-  image: zachfi/shell:archlinux
+  image: zachfi/shell:latest
   name: image
   pull: always
   volumes:
@@ -46,7 +46,7 @@ steps:
   - make publish
   environment:
     REPODIR: /repo
-  image: zachfi/shell:archlinux
+  image: zachfi/shell:latest
   name: publish
   pull: always
   volumes:

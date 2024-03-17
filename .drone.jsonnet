@@ -1,13 +1,24 @@
 {
   local this = self,
 
-  local repoDir = '/repo',
+  repoDir:: '/repo',
+  image:: 'zachfi/shell:latest',
 
+  new(name=name):: {
+                     name: name,
+                     image: this.image,
+                     pull: 'always',
+                   }
+                   + this.withRepoDir()
+                   + this.withRepoCache(),
 
-  withRepoCache(dir=repoDir):: {
-    environment: {
+  withRepoDir(dir=this.repoDir):: {
+    environment+: {
       REPODIR: dir,
     },
+  },
+
+  withRepoCache(dir=this.repoDir):: {
     volumes: [
       {
         name: 'cache',
@@ -19,48 +30,33 @@
   kind: 'pipeline',
   name: 'ci',
   steps: [
-    this.withRepoCache()
+    this.new('chown')
     {
-      name: 'chown',
-      image: 'zachfi/shell:archlinux',
-      pull: 'always',
       commands: [
         'sudo chown -R makepkg /drone',
         'sudo chown -R makepkg /repo',
       ],
     },
-    this.withRepoCache()
+    this.new('submodules')
     {
-      name: 'submodules',
-      image: 'zachfi/shell:archlinux',
-      pull: 'always',
       commands: [
         'make modules',
       ],
     },
-    this.withRepoCache()
+    this.new('repo')
     {
-      name: 'repo',
-      image: 'zachfi/shell:archlinux',
-      pull: 'always',
       commands: [
         'make repo',
       ],
     },
-    this.withRepoCache()
+    this.new('image')
     {
-      name: 'image',
-      image: 'zachfi/shell:archlinux',
-      pull: 'always',
       commands: [
         'make image',
       ],
     },
-    this.withRepoCache()
+    this.new('publish')
     {
-      name: 'publish',
-      image: 'zachfi/shell:archlinux',
-      pull: 'always',
       commands: [
         'make publish',
       ],
