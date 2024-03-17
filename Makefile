@@ -6,6 +6,8 @@ subs = duo_unix gomplate-bin k3s-bin libnvidia-container nvidia-container-runtim
 
 REPODIR ?= $(shell pwd)/repo
 
+OPTIONS=(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)
+
 clean:
 	@rm -rf $(REPODIR)/*
 	@rm -f */*.pkg.tar.zst
@@ -21,7 +23,7 @@ docker-%:
 
 .PHONY: packages-%
 packages-%:
-	@for pkg in $(pkgs); do pushd $$pkg; CARCH=$* makepkg -c; popd; done
+	for pkg in $(pkgs); do pushd $$pkg; CARCH=$* OPTIONS=$(OPTIONS) makepkg -c; popd; done
 
 #$(archs):
 #	@for pkg in $(pkgs); do pushd $$pkg; makepkg -c; popd;  done
