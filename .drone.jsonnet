@@ -25,7 +25,7 @@
       pull: 'always',
       commands: [
         'sudo chown -R makepkg /drone',
-        'git submodulr',
+        'git submodule',
         'make chown',
         'make repo',
       ],
