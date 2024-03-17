@@ -2,7 +2,8 @@ kind: pipeline
 name: ci
 steps:
 - commands:
-  - git submodule
+  - sudo chown -R makepkg /drone
+  - git submodulr
   - make chown
   - make repo
   environment:
