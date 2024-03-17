@@ -23,6 +23,7 @@ steps:
   - name: cache
     path: /repo
 - commands:
+  - ls -l
   - make repo
   environment:
     REPODIR: /repo
