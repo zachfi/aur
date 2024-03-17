@@ -57,6 +57,16 @@
         'make image',
       ],
     },
+    this.withRepoCache()
+    {
+      name: 'publish',
+      image: 'zachfi/shell:archlinux',
+      pull: 'always',
+      commands: [
+        'make publish',
+      ],
+      when: { branch: ['main'] },
+    },
   ],
   volumes: [{ name: 'cache', temp: {} }],
   trigger: { event: ['push'] },

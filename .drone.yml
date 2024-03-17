@@ -43,6 +43,19 @@ steps:
   volumes:
   - name: cache
     path: /repo
+- commands:
+  - make publish
+  environment:
+    REPODIR: /repo
+  image: zachfi/shell:archlinux
+  name: publish
+  pull: always
+  volumes:
+  - name: cache
+    path: /repo
+  when:
+    branch:
+    - main
 trigger:
   event:
   - push
