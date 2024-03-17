@@ -24,7 +24,8 @@
       image: 'zachfi/shell:archlinux',
       pull: 'always',
       commands: [
-        'git submodule',
+        'sudo chown -R makepkg /drone',
+        'git submodulr',
         'make chown',
         'make repo',
       ],
