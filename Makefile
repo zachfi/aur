@@ -10,6 +10,9 @@ clean:
 	@rm -rf $(REPODIR)/*
 	@rm -f */*.pkg.tar.zst
 
+chown:
+	@sudo chown -R makepkg $(REPODIR)/
+
 docker-%:
 
 .PHONY: packages-%

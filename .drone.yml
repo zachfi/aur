@@ -2,12 +2,8 @@ kind: pipeline
 name: ci
 steps:
 - commands:
-  - whoami
-  - pwd
-  - ls -ld
-  - ls -l
-  - ls -ld /repo
-  - sudo chown -R makepkg /repo
+  - git submodule
+  - make chown
   - make repo
   environment:
     REPODIR: /repo
