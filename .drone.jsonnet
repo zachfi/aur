@@ -43,6 +43,7 @@
       image: 'zachfi/shell:archlinux',
       pull: 'always',
       commands: [
+        'ls -l',
         'make repo',
       ],
     },
