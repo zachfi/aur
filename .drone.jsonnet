@@ -3,6 +3,7 @@
 
   local repoDir = '/repo',
 
+
   withRepoCache(dir=repoDir):: {
     environment: {
       REPODIR: dir,
@@ -58,4 +59,5 @@
     },
   ],
   volumes: [{ name: 'cache', temp: {} }],
+  trigger: { event: ['push'] },
 }

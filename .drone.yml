@@ -43,6 +43,9 @@ steps:
   volumes:
   - name: cache
     path: /repo
+trigger:
+  event:
+  - push
 volumes:
 - name: cache
   temp: {}
