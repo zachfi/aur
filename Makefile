@@ -33,7 +33,7 @@ docker-%:
 
 .PHONY: repo
 repo: clean
-	@mkdir $(REPODIR)/
+	@ls -ld $(REPODIR) || mkdir $(REPODIR)/
 	@for r in $(archs); do $(MAKE) repo-$$r; done
 
 .PHONY: image
