@@ -23,7 +23,7 @@ docker-%:
 
 .PHONY: packages-%
 packages-%:
-	for pkg in $(pkgs); do pushd $$pkg; CARCH=$* OPTIONS=$(OPTIONS) makepkg -c; popd; done
+	@for pkg in $(pkgs); do pushd $$pkg; CARCH=$* OPTIONS=$(OPTIONS) makepkg -c; popd; done
 
 #$(archs):
 #	@for pkg in $(pkgs); do pushd $$pkg; makepkg -c; popd;  done
