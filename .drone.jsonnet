@@ -69,7 +69,7 @@
       ],
       volumes: [
         {
-          name: 'docker.sock',
+          name: 'docker',
           path: '/var/run/docker.sock',
         },
       ],
@@ -81,7 +81,7 @@
       ],
       volumes: [
         {
-          name: 'docker.sock',
+          name: 'docker',
           path: '/var/run/docker.sock',
         },
       ],
@@ -90,7 +90,7 @@
   ],
   volumes: [
     { name: 'cache', temp: {} },
-    { name: 'docker.sock', host: { path: '/var/run/docker.sock' } },
+    { name: 'docker', host: { path: '/var/run/docker.sock' } },
   ],
   trigger: { event: ['push'] },
 }

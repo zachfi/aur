@@ -49,7 +49,7 @@ steps:
   name: image
   pull: always
   volumes:
-  - name: docker.sock
+  - name: docker
     path: /var/run/docker.sock
 - commands:
   - make publish
@@ -59,7 +59,7 @@ steps:
   name: publish
   pull: always
   volumes:
-  - name: docker.sock
+  - name: docker
     path: /var/run/docker.sock
   when:
     branch:
@@ -72,4 +72,4 @@ volumes:
   temp: {}
 - host:
     path: /var/run/docker.sock
-  name: docker.sock
+  name: docker
