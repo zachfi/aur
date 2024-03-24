@@ -70,3 +70,6 @@ trigger:
 volumes:
 - name: cache
   temp: {}
+- host:
+    path: /var/run/docker.sock
+  name: docker.sock

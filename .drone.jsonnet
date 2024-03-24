@@ -88,6 +88,9 @@
       when: { branch: ['main'] },
     },
   ],
-  volumes: [{ name: 'cache', temp: {} }],
+  volumes: [
+    { name: 'cache', temp: {} },
+    { name: 'docker.sock', host: { path: '/var/run/docker.sock' } },
+  ],
   trigger: { event: ['push'] },
 }
