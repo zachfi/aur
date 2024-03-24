@@ -10,7 +10,9 @@
                      pull: 'always',
                    }
                    + this.withRepoDir()
-                   + this.withRepoCache(),
+                   + this.withRepoCache()
+                   + this.withDockerSocket()
+  ,
 
   withRepoDir(dir=this.repoDir):: {
     environment+: {
@@ -19,10 +21,21 @@
   },
 
   withRepoCache(dir=this.repoDir):: {
-    volumes: [
+    volumes+: [
       {
         name: 'cache',
         path: dir,
+      },
+    ],
+  },
+
+  withDockerSocket():: {
+    volumes+: [
+      {
+        name: 'docker.sock',
+        host: {
+          path: '/var/run/docker.sock',
+        },
       },
     ],
   },
@@ -54,11 +67,23 @@
       commands: [
         'make image',
       ],
+      volumes: [
+        {
+          name: 'docker.sock',
+          path: '/var/run/docker.sock',
+        },
+      ],
     },
     this.new('publish')
     {
       commands: [
         'make publish',
+      ],
+      volumes: [
+        {
+          name: 'docker.sock',
+          path: '/var/run/docker.sock',
+        },
       ],
       when: { branch: ['main'] },
     },

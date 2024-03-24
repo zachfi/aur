@@ -12,6 +12,9 @@ steps:
   volumes:
   - name: cache
     path: /repo
+  - host:
+      path: /var/run/docker.sock
+    name: docker.sock
 - commands:
   - make modules
   environment:
@@ -22,6 +25,9 @@ steps:
   volumes:
   - name: cache
     path: /repo
+  - host:
+      path: /var/run/docker.sock
+    name: docker.sock
 - commands:
   - make repo
   environment:
@@ -32,6 +38,9 @@ steps:
   volumes:
   - name: cache
     path: /repo
+  - host:
+      path: /var/run/docker.sock
+    name: docker.sock
 - commands:
   - make image
   environment:
@@ -40,8 +49,8 @@ steps:
   name: image
   pull: always
   volumes:
-  - name: cache
-    path: /repo
+  - name: docker.sock
+    path: /var/run/docker.sock
 - commands:
   - make publish
   environment:
@@ -50,8 +59,8 @@ steps:
   name: publish
   pull: always
   volumes:
-  - name: cache
-    path: /repo
+  - name: docker.sock
+    path: /var/run/docker.sock
   when:
     branch:
     - main
