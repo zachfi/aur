@@ -33,8 +33,8 @@ repo-%:
 
 .PHONY: docker-%
 docker-%:
-	@docker pull nginx:alpine
-	@docker build --build-arg arch=$* --build-arg repodir=$(REPODIR) -t zachfi/aur:$* .
+	@sudo docker pull nginx:alpine
+	@sudo docker build --build-arg arch=$* --build-arg repodir=$(REPODIR) -t zachfi/aur:$* .
 
 .PHONY: repo
 repo: clean
@@ -46,7 +46,7 @@ image:
 	@for r in $(archs); do $(MAKE) docker-$$r; done
 
 publish:
-	@for r in $(archs); do docker push zachfi/aur:$$r; done
+	@for r in $(archs); do sudo docker push zachfi/aur:$$r; done
 
 .PHONY: drone
 drone:
