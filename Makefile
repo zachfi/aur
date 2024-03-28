@@ -34,7 +34,8 @@ repo-%:
 .PHONY: docker-%
 docker-%:
 	@sudo docker pull nginx:alpine
-	@sudo docker build --build-arg arch=$* --build-arg repodir=$(REPODIR) -t zachfi/aur:$* .
+	@sudo docker build --build-arg arch=$* -t zachfi/aur:$* .
+	@sudo docker push zachfi/aur:$*
 
 .PHONY: repo
 repo: clean
