@@ -34,7 +34,7 @@ repo-%:
 .PHONY: docker-%
 docker-%:
 	@sudo docker pull nginx:alpine
-	@sudo docker buildx build --build-arg arch=$* -t zachfi/aur:$* .
+	sudo docker buildx build --build-arg arch=$* -t zachfi/aur:$* .
 
 .PHONY: repo
 repo: clean
