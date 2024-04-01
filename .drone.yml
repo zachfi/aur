@@ -50,10 +50,8 @@ steps:
 - commands:
   - sudo docker push zachfi/aur:x86_64
   image: zachfi/shell:latest
-  name: build-image-x86_64
+  name: publish-image-x86_64
   volumes:
-  - name: cache
-    path: /repo/x86_64
   - name: dockersock
     path: /var/run/docker.sock
   when:

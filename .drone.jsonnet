@@ -95,7 +95,7 @@ local buildImage(arch) = {
 local publishImage(arch) = {
   local dir = '/repo/%s' % arch,
 
-  name: 'build-image-%s' % arch,
+  name: 'publish-image-%s' % arch,
   image: image,
   commands:
     [
