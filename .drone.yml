@@ -140,3 +140,74 @@ volumes:
 - host:
     path: /var/run/docker.sock
   name: dockersock
+---
+depends_on: []
+kind: pipeline
+name: ci-armv7h
+steps:
+- commands:
+  - sudo chown -R makepkg /repo
+  - sudo chown -R makepkg /drone
+  - git submodule init
+  - git submodule update
+  image: zachfi/shell:latest
+  name: init-repo-armv7h
+  volumes:
+  - name: cache
+    path: /repo/armv7h
+- commands:
+  - cd nodemanager-bin
+  - makepkg -c
+  environment:
+    CARCH: armv7h
+    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
+      !autodeps)
+  image: zachfi/shell:latest
+  name: build-pkg-nodemanager-bin
+  volumes:
+  - name: cache
+    path: /repo/armv7h
+- commands:
+  - cp nodemanager-bin/*armv7h*.pkg.tar.zst /repo/armv7h
+  - rm /repo/armv7h/*-debug-*
+  - repo-add /repo/armv7h/custom.db.tar.gz /repo/armv7h/*pkg.tar.zst
+  environment:
+    CARCH: armv7h
+    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
+      !autodeps)
+  image: zachfi/shell:latest
+  name: make-repo-armv7h
+  volumes:
+  - name: cache
+    path: /repo/armv7h
+- commands:
+  - sudo docker build -t zachfi/aur:armv7h -f Dockerfile /repo/armv7h
+  image: zachfi/shell:latest
+  name: build-image-armv7h
+  volumes:
+  - name: cache
+    path: /repo/armv7h
+  - name: dockersock
+    path: /var/run/docker.sock
+- commands:
+  - echo $DOCKER_PASSWORD | sudo docker login --username $DOCKER_USERNAME --password-stdin
+  - sudo docker push zachfi/aur:armv7h
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: DOCKER_PASSWORD
+    DOCKER_USERNAME:
+      from_secret: DOCKER_USERNAME
+  image: zachfi/shell:latest
+  name: publish-image-armv7h
+  volumes:
+  - name: dockersock
+    path: /var/run/docker.sock
+  when:
+    branch:
+    - main
+volumes:
+- name: cache
+  temp: {}
+- host:
+    path: /var/run/docker.sock
+  name: dockersock

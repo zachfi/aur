@@ -1,4 +1,4 @@
-local repoArchs = ['x86_64', 'aarch64'];
+local repoArchs = ['x86_64', 'aarch64', 'armv7h'];
 local repoPkgs = ['nodemanager-bin'];
 local image = 'zachfi/shell:latest';
 
