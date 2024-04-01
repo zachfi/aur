@@ -69,3 +69,74 @@ volumes:
 - host:
     path: /var/run/docker.sock
   name: dockersock
+---
+depends_on: []
+kind: pipeline
+name: ci-aarch64
+steps:
+- commands:
+  - sudo chown -R makepkg /repo
+  - sudo chown -R makepkg /drone
+  - git submodule init
+  - git submodule update
+  image: zachfi/shell:latest
+  name: init-repo-aarch64
+  volumes:
+  - name: cache
+    path: /repo/aarch64
+- commands:
+  - cd nodemanager-bin
+  - makepkg -c
+  environment:
+    CARCH: aarch64
+    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
+      !autodeps)
+  image: zachfi/shell:latest
+  name: build-pkg-nodemanager-bin
+  volumes:
+  - name: cache
+    path: /repo/aarch64
+- commands:
+  - cp nodemanager-bin/*aarch64*.pkg.tar.zst /repo/aarch64
+  - rm /repo/aarch64/*-debug-*
+  - repo-add /repo/aarch64/custom.db.tar.gz /repo/aarch64/*pkg.tar.zst
+  environment:
+    CARCH: aarch64
+    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
+      !autodeps)
+  image: zachfi/shell:latest
+  name: make-repo-aarch64
+  volumes:
+  - name: cache
+    path: /repo/aarch64
+- commands:
+  - sudo docker build -t zachfi/aur:aarch64 -f Dockerfile /repo/aarch64
+  image: zachfi/shell:latest
+  name: build-image-aarch64
+  volumes:
+  - name: cache
+    path: /repo/aarch64
+  - name: dockersock
+    path: /var/run/docker.sock
+- commands:
+  - echo $DOCKER_PASSWORD | sudo docker login --username $DOCKER_USERNAME --password-stdin
+  - sudo docker push zachfi/aur:aarch64
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: DOCKER_PASSWORD
+    DOCKER_USERNAME:
+      from_secret: DOCKER_USERNAME
+  image: zachfi/shell:latest
+  name: publish-image-aarch64
+  volumes:
+  - name: dockersock
+    path: /var/run/docker.sock
+  when:
+    branch:
+    - main
+volumes:
+- name: cache
+  temp: {}
+- host:
+    path: /var/run/docker.sock
+  name: dockersock
