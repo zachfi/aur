@@ -48,6 +48,7 @@ steps:
   - name: dockersock
     path: /var/run/docker.sock
 - commands:
+  - sudo docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
   - sudo docker push zachfi/aur:x86_64
   environment:
     DOCKER_PASSWORD:

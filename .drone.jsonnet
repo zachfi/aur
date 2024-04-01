@@ -99,6 +99,7 @@ local publishImage(arch) = {
   image: image,
   commands:
     [
+      'sudo docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD',
       'sudo docker push zachfi/aur:%(arch)s' % { arch: arch },
     ],
   volumes+: [
