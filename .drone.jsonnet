@@ -105,6 +105,10 @@ local publishImage(arch) = {
     { name: 'dockersock', path: '/var/run/docker.sock' },
   ],
   when: { branch: ['main'] },
+  environment: {
+    DOCKER_USERNAME: { from_secret: 'DOCKER_USERNAME' },
+    DOCKER_PASSWORD: { from_secret: 'DOCKER_PASSWORD' },
+  },
 };
 
 [

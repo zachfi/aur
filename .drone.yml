@@ -49,6 +49,11 @@ steps:
     path: /var/run/docker.sock
 - commands:
   - sudo docker push zachfi/aur:x86_64
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: DOCKER_PASSWORD
+    DOCKER_USERNAME:
+      from_secret: DOCKER_USERNAME
   image: zachfi/shell:latest
   name: publish-image-x86_64
   volumes:
