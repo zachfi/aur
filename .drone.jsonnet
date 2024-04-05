@@ -26,7 +26,7 @@ local initRepo(arch) = {
   name: 'init-repo-%s' % arch,
   image: image,
   commands: [
-    // 'sudo mkdir -p /repo/%s' % arch,
+    'sudo mkdir -p /repo/%s' % arch,
     'sudo chown -R makepkg /repo',
     'sudo chown -R makepkg /drone',
     'git submodule init',

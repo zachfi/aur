@@ -4,6 +4,7 @@ kind: pipeline
 name: ci
 steps:
 - commands:
+  - sudo mkdir -p /repo/x86_64
   - sudo chown -R makepkg /repo
   - sudo chown -R makepkg /drone
   - git submodule init
@@ -14,6 +15,7 @@ steps:
   - name: cache
     path: /repo
 - commands:
+  - sudo mkdir -p /repo/aarch64
   - sudo chown -R makepkg /repo
   - sudo chown -R makepkg /drone
   - git submodule init
@@ -24,6 +26,7 @@ steps:
   - name: cache
     path: /repo
 - commands:
+  - sudo mkdir -p /repo/armv7h
   - sudo chown -R makepkg /repo
   - sudo chown -R makepkg /drone
   - git submodule init
