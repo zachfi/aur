@@ -39,7 +39,7 @@ local initRepo(arch) = {
 local buildPkg(pkg, arch) = {
   local dir = '/repo/%s' % arch,
 
-  name: 'build-pkg-%s' % pkg,
+  name: 'build-pkg-%s-%s' % [pkg, arch],
   image: image,
   environment: {
     CARCH: arch,
@@ -77,14 +77,14 @@ local mkRepo(arch) = {
   ],
 };
 
-local buildImage(arch) = {
-  local dir = '/repo/%s' % arch,
+local buildImage() = {
+  local dir = '/repo',
 
-  name: 'build-image-%s' % arch,
+  name: 'build-image',
   image: image,
   commands:
     [
-      'sudo docker build -t zachfi/aur:%(arch)s -f Dockerfile %(dir)s' % { dir: dir, arch: arch },
+      'sudo docker build -t zachfi/aur -f Dockerfile %(dir)s' % { dir: dir },
     ],
   volumes+: [
     { name: 'cache', path: dir },
@@ -92,15 +92,15 @@ local buildImage(arch) = {
   ],
 };
 
-local publishImage(arch) = {
-  local dir = '/repo/%s' % arch,
+local publishImage() = {
+  local dir = '/repo',
 
-  name: 'publish-image-%s' % arch,
+  name: 'publish-image',
   image: image,
   commands:
     [
       'echo $DOCKER_PASSWORD | sudo docker login --username $DOCKER_USERNAME --password-stdin',
-      'sudo docker push zachfi/aur:%(arch)s' % { arch: arch },
+      'sudo docker push zachfi/aur',
     ],
   volumes+: [
     { name: 'dockersock', path: '/var/run/docker.sock' },
@@ -114,103 +114,25 @@ local publishImage(arch) = {
 
 [
   (
-    pipeline('ci-%s' % arch) {
+    pipeline('ci') {
       steps:
         [
-          initRepo(arch),
+          initRepo(arch)
+          for arch in repoArchs
         ]
         + [
           buildPkg(pkg, arch)
           for pkg in repoPkgs
+          for arch in repoArchs
         ]
         + [
-          mkRepo(arch),
-          buildImage(arch),
-          publishImage(arch),
+          mkRepo(arch)
+          for arch in repoArchs
+        ]
+        + [
+          buildImage(),
+          publishImage(),
         ],
     }
-  )
-  for arch in repoArchs
-] + [
-  // {
-  //   local this = self,
-  //
-  //   repoDir:: '/repo',
-  //
-  //   step(name=name):: {
-  //     name: name,
-  //     image: image,
-  //     pull: 'always',
-  //   }
-  //   // + this.withRepoDir()
-  //   // + this.withRepoCache()
-  //   // + this.withDockerSocket()
-  //   ,
-  //
-  //   withRepoDir(dir=this.repoDir):: {
-  //     environment+: {
-  //       REPODIR: dir,
-  //     },
-  //   },
-  //
-  //   withRepoCache(dir=this.repoDir):: {
-  //     volumes+: [
-  //       {
-  //         name: 'cache',
-  //         path: dir,
-  //       },
-  //     ],
-  //   },
-  //
-  //   withDockerSocket():: {
-  //     volumes+: [
-  //       {
-  //         name: 'dockersock',
-  //         path: '/var/run/docker.sock',
-  //       },
-  //     ],
-  //   },
-  //
-  //   kind: 'pipeline',
-  //   name: 'ci',
-  //   steps: [
-  //     this.step('chown')
-  //     {
-  //       commands: [
-  //         'sudo chown -R makepkg /drone',
-  //         'sudo chown -R makepkg /repo',
-  //       ],
-  //     },
-  //     this.step('submodules')
-  //     {
-  //       commands: [
-  //         'make modules',
-  //       ],
-  //     },
-  //     this.step('repo')
-  //     {
-  //       commands: [
-  //         'make repo',
-  //       ],
-  //     },
-  //     this.step('image')
-  //     {
-  //       commands: [
-  //         'make image',
-  //       ],
-  //     },
-  //     this.step('publish')
-  //     {
-  //       commands: [
-  //         'make publish',
-  //       ],
-  //       when: { branch: ['main'] },
-  //     },
-  //   ],
-  //   volumes: [
-  //     { name: 'cache', temp: {} },
-  //     { name: 'dockersock', host: { path: '/var/run/docker.sock' } },
-  //   ],
-  //   trigger: { event: ['push'] },
-  // },
+  ),
 ]
