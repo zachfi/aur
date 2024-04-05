@@ -12,7 +12,7 @@ steps:
   name: init-repo-x86_64
   volumes:
   - name: cache
-    path: /repo/x86_64
+    path: /repo
 - commands:
   - sudo chown -R makepkg /repo
   - sudo chown -R makepkg /drone
@@ -22,7 +22,7 @@ steps:
   name: init-repo-aarch64
   volumes:
   - name: cache
-    path: /repo/aarch64
+    path: /repo
 - commands:
   - sudo chown -R makepkg /repo
   - sudo chown -R makepkg /drone
@@ -32,7 +32,7 @@ steps:
   name: init-repo-armv7h
   volumes:
   - name: cache
-    path: /repo/armv7h
+    path: /repo
 - commands:
   - cd nodemanager-bin
   - makepkg -c
@@ -44,7 +44,7 @@ steps:
   name: build-pkg-nodemanager-bin-x86_64
   volumes:
   - name: cache
-    path: /repo/x86_64
+    path: /repo
 - commands:
   - cd nodemanager-bin
   - makepkg -c
@@ -56,7 +56,7 @@ steps:
   name: build-pkg-nodemanager-bin-aarch64
   volumes:
   - name: cache
-    path: /repo/aarch64
+    path: /repo
 - commands:
   - cd nodemanager-bin
   - makepkg -c
@@ -68,7 +68,7 @@ steps:
   name: build-pkg-nodemanager-bin-armv7h
   volumes:
   - name: cache
-    path: /repo/armv7h
+    path: /repo
 - commands:
   - cp nodemanager-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - rm /repo/x86_64/*-debug-*
@@ -81,7 +81,7 @@ steps:
   name: make-repo-x86_64
   volumes:
   - name: cache
-    path: /repo/x86_64
+    path: /repo
 - commands:
   - cp nodemanager-bin/*aarch64*.pkg.tar.zst /repo/aarch64
   - rm /repo/aarch64/*-debug-*
@@ -94,7 +94,7 @@ steps:
   name: make-repo-aarch64
   volumes:
   - name: cache
-    path: /repo/aarch64
+    path: /repo
 - commands:
   - cp nodemanager-bin/*armv7h*.pkg.tar.zst /repo/armv7h
   - rm /repo/armv7h/*-debug-*
@@ -107,7 +107,7 @@ steps:
   name: make-repo-armv7h
   volumes:
   - name: cache
-    path: /repo/armv7h
+    path: /repo
 - commands:
   - sudo docker build -t zachfi/aur -f Dockerfile /repo
   image: zachfi/shell:latest

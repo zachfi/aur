@@ -1,6 +1,7 @@
 local repoArchs = ['x86_64', 'aarch64', 'armv7h'];
 local repoPkgs = ['nodemanager-bin'];
 local image = 'zachfi/shell:latest';
+local cacheBase = '/repo';
 
 local pipeline(name) = {
   kind: 'pipeline',
@@ -20,7 +21,7 @@ local step(name) = {
 };
 
 local initRepo(arch) = {
-  local dir = '/repo/%s' % arch,
+  local dir = '%s/%s' % [cacheBase, arch],
 
   name: 'init-repo-%s' % arch,
   image: image,
@@ -32,12 +33,12 @@ local initRepo(arch) = {
     'git submodule update',
   ],
   volumes+: [
-    { name: 'cache', path: dir },
+    { name: 'cache', path: cacheBase },
   ],
 };
 
 local buildPkg(pkg, arch) = {
-  local dir = '/repo/%s' % arch,
+  local dir = '%s/%s' % [cacheBase, arch],
 
   name: 'build-pkg-%s-%s' % [pkg, arch],
   image: image,
@@ -50,12 +51,12 @@ local buildPkg(pkg, arch) = {
     'makepkg -c',
   ],
   volumes+: [
-    { name: 'cache', path: dir },
+    { name: 'cache', path: cacheBase },
   ],
 };
 
 local mkRepo(arch) = {
-  local dir = '/repo/%s' % arch,
+  local dir = '%s/%s' % [cacheBase, arch],
 
   name: 'make-repo-%s' % arch,
   image: image,
@@ -73,28 +74,24 @@ local mkRepo(arch) = {
       'repo-add %(dir)s/custom.db.tar.gz %(dir)s/*pkg.tar.zst' % { dir: dir },
     ],
   volumes+: [
-    { name: 'cache', path: dir },
+    { name: 'cache', path: cacheBase },
   ],
 };
 
 local buildImage() = {
-  local dir = '/repo',
-
   name: 'build-image',
   image: image,
   commands:
     [
-      'sudo docker build -t zachfi/aur -f Dockerfile %(dir)s' % { dir: dir },
+      'sudo docker build -t zachfi/aur -f Dockerfile %(dir)s' % { dir: cacheBase },
     ],
   volumes+: [
-    { name: 'cache', path: dir },
+    { name: 'cache', path: cacheBase },
     { name: 'dockersock', path: '/var/run/docker.sock' },
   ],
 };
 
 local publishImage() = {
-  local dir = '/repo',
-
   name: 'publish-image',
   image: image,
   commands:
