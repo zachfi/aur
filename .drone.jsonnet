@@ -1,7 +1,13 @@
 local repoArchs = ['x86_64', 'aarch64', 'armv7h'];
-local repoPkgs = ['nodemanager-bin', 'k3s-bin'];
+local repoPkgs = ['nodemanager-bin', 'k3s-bin', 'duo_unix'];
 local image = 'zachfi/shell:latest';
 local cacheBase = '/repo';
+
+local hostmap = {
+  aarch64: 'aarch64-unknown-linux-gnu',
+  armv7h: 'arm-unknown-linux-gnueabi',
+  x86_64: 'x86_64-unknown-linux-gnu',
+};
 
 local pipeline(name) = {
   kind: 'pipeline',
@@ -44,6 +50,7 @@ local buildPkg(pkg, arch) = {
   image: image,
   environment: {
     CARCH: arch,
+    CHOST: hostmap[arch],
     OPTIONS: '(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)',
   },
   commands: [
