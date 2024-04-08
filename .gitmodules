@@ -1,6 +1,6 @@
 [submodule "duo_unix"]
 	path = duo_unix
-	url = https://aur.archlinux.org/duo_unix.git
+	url = https://github.com/zachfi/duo_unix.git
 [submodule "gomplate-bin"]
 	path = gomplate-bin
 	url = https://aur.archlinux.org/gomplate-bin.git
