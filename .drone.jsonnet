@@ -48,7 +48,7 @@ local buildPkg(pkg, arch) = {
   },
   commands: [
     'cd %s' % pkg,
-    'makepkg -c',
+    'makepkg -Ac',
   ],
   volumes+: [
     { name: 'cache', path: cacheBase },

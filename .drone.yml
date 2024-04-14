@@ -38,7 +38,7 @@ steps:
     path: /repo
 - commands:
   - cd nodemanager-bin
-  - makepkg -c
+  - makepkg -Ac
   environment:
     CARCH: x86_64
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
@@ -50,7 +50,7 @@ steps:
     path: /repo
 - commands:
   - cd nodemanager-bin
-  - makepkg -c
+  - makepkg -Ac
   environment:
     CARCH: aarch64
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
@@ -62,7 +62,7 @@ steps:
     path: /repo
 - commands:
   - cd nodemanager-bin
-  - makepkg -c
+  - makepkg -Ac
   environment:
     CARCH: armv7h
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
@@ -74,7 +74,7 @@ steps:
     path: /repo
 - commands:
   - cd k3s-bin
-  - makepkg -c
+  - makepkg -Ac
   environment:
     CARCH: x86_64
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
@@ -86,7 +86,7 @@ steps:
     path: /repo
 - commands:
   - cd k3s-bin
-  - makepkg -c
+  - makepkg -Ac
   environment:
     CARCH: aarch64
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
@@ -98,7 +98,7 @@ steps:
     path: /repo
 - commands:
   - cd k3s-bin
-  - makepkg -c
+  - makepkg -Ac
   environment:
     CARCH: armv7h
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
@@ -110,7 +110,7 @@ steps:
     path: /repo
 - commands:
   - cd gomplate-bin
-  - makepkg -c
+  - makepkg -Ac
   environment:
     CARCH: x86_64
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
@@ -122,7 +122,7 @@ steps:
     path: /repo
 - commands:
   - cd gomplate-bin
-  - makepkg -c
+  - makepkg -Ac
   environment:
     CARCH: aarch64
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
@@ -134,7 +134,7 @@ steps:
     path: /repo
 - commands:
   - cd gomplate-bin
-  - makepkg -c
+  - makepkg -Ac
   environment:
     CARCH: armv7h
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
