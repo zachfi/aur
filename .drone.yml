@@ -109,8 +109,45 @@ steps:
   - name: cache
     path: /repo
 - commands:
+  - cd gomplate-bin
+  - makepkg -c
+  environment:
+    CARCH: x86_64
+    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
+      !autodeps)
+  image: zachfi/shell:latest
+  name: build-pkg-gomplate-bin-x86_64
+  volumes:
+  - name: cache
+    path: /repo
+- commands:
+  - cd gomplate-bin
+  - makepkg -c
+  environment:
+    CARCH: aarch64
+    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
+      !autodeps)
+  image: zachfi/shell:latest
+  name: build-pkg-gomplate-bin-aarch64
+  volumes:
+  - name: cache
+    path: /repo
+- commands:
+  - cd gomplate-bin
+  - makepkg -c
+  environment:
+    CARCH: armv7h
+    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
+      !autodeps)
+  image: zachfi/shell:latest
+  name: build-pkg-gomplate-bin-armv7h
+  volumes:
+  - name: cache
+    path: /repo
+- commands:
   - cp nodemanager-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp k3s-bin/*x86_64*.pkg.tar.zst /repo/x86_64
+  - cp gomplate-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - rm /repo/x86_64/*-debug-*
   - repo-add /repo/x86_64/custom.db.tar.gz /repo/x86_64/*pkg.tar.zst
   environment:
@@ -125,6 +162,7 @@ steps:
 - commands:
   - cp nodemanager-bin/*aarch64*.pkg.tar.zst /repo/aarch64
   - cp k3s-bin/*aarch64*.pkg.tar.zst /repo/aarch64
+  - cp gomplate-bin/*aarch64*.pkg.tar.zst /repo/aarch64
   - rm /repo/aarch64/*-debug-*
   - repo-add /repo/aarch64/custom.db.tar.gz /repo/aarch64/*pkg.tar.zst
   environment:
@@ -139,6 +177,7 @@ steps:
 - commands:
   - cp nodemanager-bin/*armv7h*.pkg.tar.zst /repo/armv7h
   - cp k3s-bin/*armv7h*.pkg.tar.zst /repo/armv7h
+  - cp gomplate-bin/*armv7h*.pkg.tar.zst /repo/armv7h
   - rm /repo/armv7h/*-debug-*
   - repo-add /repo/armv7h/custom.db.tar.gz /repo/armv7h/*pkg.tar.zst
   environment:
