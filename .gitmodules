@@ -18,4 +18,4 @@
 	url = https://github.com/zachfi/nodemanager-bin.git
 [submodule "alloy-bin"]
 	path = alloy-bin
-	url = git@github.com:zachfi/alloy-bin.git
+	url = https://github.com/zachfi/alloy-bin.git
