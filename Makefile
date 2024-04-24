@@ -1,7 +1,7 @@
 .PHONY: all clean drone repo
 
 archs = x86_64 armv7h aarch64
-pkgs = nodemanager-bin
+pkgs = nodemanager-bin alloy-bin
 subs = duo_unix gomplate-bin k3s-bin libnvidia-container nvidia-container-runtime nvidia-container-toolkit
 
 REPODIR ?= $(shell pwd)/repo
