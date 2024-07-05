@@ -15,17 +15,6 @@ steps:
   - name: cache
     path: /repo
 - commands:
-  - sudo mkdir -p /repo/aarch64
-  - sudo chown -R makepkg /repo
-  - sudo chown -R makepkg /drone
-  - git submodule init
-  - git submodule update
-  image: zachfi/shell:latest
-  name: init-repo-aarch64
-  volumes:
-  - name: cache
-    path: /repo
-- commands:
   - cd nodemanager-bin
   - makepkg -c
   environment:
@@ -34,18 +23,6 @@ steps:
       !autodeps)
   image: zachfi/shell:latest
   name: build-pkg-nodemanager-bin-x86_64
-  volumes:
-  - name: cache
-    path: /repo
-- commands:
-  - cd nodemanager-bin
-  - makepkg -c
-  environment:
-    CARCH: aarch64
-    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
-      !autodeps)
-  image: zachfi/shell:latest
-  name: build-pkg-nodemanager-bin-aarch64
   volumes:
   - name: cache
     path: /repo
@@ -62,18 +39,6 @@ steps:
   - name: cache
     path: /repo
 - commands:
-  - cd k3s-bin
-  - makepkg -c
-  environment:
-    CARCH: aarch64
-    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
-      !autodeps)
-  image: zachfi/shell:latest
-  name: build-pkg-k3s-bin-aarch64
-  volumes:
-  - name: cache
-    path: /repo
-- commands:
   - cd gomplate-bin
   - makepkg -c
   environment:
@@ -82,18 +47,6 @@ steps:
       !autodeps)
   image: zachfi/shell:latest
   name: build-pkg-gomplate-bin-x86_64
-  volumes:
-  - name: cache
-    path: /repo
-- commands:
-  - cd gomplate-bin
-  - makepkg -c
-  environment:
-    CARCH: aarch64
-    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
-      !autodeps)
-  image: zachfi/shell:latest
-  name: build-pkg-gomplate-bin-aarch64
   volumes:
   - name: cache
     path: /repo
@@ -109,21 +62,6 @@ steps:
       !autodeps)
   image: zachfi/shell:latest
   name: make-repo-x86_64
-  volumes:
-  - name: cache
-    path: /repo
-- commands:
-  - cp nodemanager-bin/*aarch64*.pkg.tar.zst /repo/aarch64
-  - cp k3s-bin/*aarch64*.pkg.tar.zst /repo/aarch64
-  - cp gomplate-bin/*aarch64*.pkg.tar.zst /repo/aarch64
-  - rm /repo/aarch64/*-debug-*
-  - repo-add /repo/aarch64/custom.db.tar.gz /repo/aarch64/*pkg.tar.zst
-  environment:
-    CARCH: aarch64
-    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
-      !autodeps)
-  image: zachfi/shell:latest
-  name: make-repo-aarch64
   volumes:
   - name: cache
     path: /repo
