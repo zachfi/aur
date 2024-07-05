@@ -1,5 +1,5 @@
 local repoArchs = ['x86_64'];
-local repoPkgs = ['nodemanager-bin', 'k3s-bin', 'gomplate-bin'];
+local repoPkgs = ['nodemanager-bin', 'k3s-bin', 'gomplate-bin', 'duo_unix'];
 local image = 'zachfi/shell:latest';
 local cacheBase = '/repo';
 

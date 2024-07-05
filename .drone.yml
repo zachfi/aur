@@ -51,9 +51,22 @@ steps:
   - name: cache
     path: /repo
 - commands:
+  - cd duo_unix
+  - makepkg -c
+  environment:
+    CARCH: x86_64
+    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
+      !autodeps)
+  image: zachfi/shell:latest
+  name: build-pkg-duo_unix-x86_64
+  volumes:
+  - name: cache
+    path: /repo
+- commands:
   - cp nodemanager-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp k3s-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp gomplate-bin/*x86_64*.pkg.tar.zst /repo/x86_64
+  - cp duo_unix/*x86_64*.pkg.tar.zst /repo/x86_64
   - rm /repo/x86_64/*-debug-*
   - repo-add /repo/x86_64/custom.db.tar.gz /repo/x86_64/*pkg.tar.zst
   environment:
