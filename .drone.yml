@@ -26,17 +26,6 @@ steps:
   - name: cache
     path: /repo
 - commands:
-  - sudo mkdir -p /repo/armv7h
-  - sudo chown -R makepkg /repo
-  - sudo chown -R makepkg /drone
-  - git submodule init
-  - git submodule update
-  image: zachfi/shell:latest
-  name: init-repo-armv7h
-  volumes:
-  - name: cache
-    path: /repo
-- commands:
   - cd nodemanager-bin
   - makepkg -c
   environment:
@@ -57,18 +46,6 @@ steps:
       !autodeps)
   image: zachfi/shell:latest
   name: build-pkg-nodemanager-bin-aarch64
-  volumes:
-  - name: cache
-    path: /repo
-- commands:
-  - cd nodemanager-bin
-  - makepkg -c
-  environment:
-    CARCH: armv7h
-    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
-      !autodeps)
-  image: zachfi/shell:latest
-  name: build-pkg-nodemanager-bin-armv7h
   volumes:
   - name: cache
     path: /repo
@@ -97,18 +74,6 @@ steps:
   - name: cache
     path: /repo
 - commands:
-  - cd k3s-bin
-  - makepkg -c
-  environment:
-    CARCH: armv7h
-    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
-      !autodeps)
-  image: zachfi/shell:latest
-  name: build-pkg-k3s-bin-armv7h
-  volumes:
-  - name: cache
-    path: /repo
-- commands:
   - cp nodemanager-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp k3s-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - rm /repo/x86_64/*-debug-*
@@ -133,20 +98,6 @@ steps:
       !autodeps)
   image: zachfi/shell:latest
   name: make-repo-aarch64
-  volumes:
-  - name: cache
-    path: /repo
-- commands:
-  - cp nodemanager-bin/*armv7h*.pkg.tar.zst /repo/armv7h
-  - cp k3s-bin/*armv7h*.pkg.tar.zst /repo/armv7h
-  - rm /repo/armv7h/*-debug-*
-  - repo-add /repo/armv7h/custom.db.tar.gz /repo/armv7h/*pkg.tar.zst
-  environment:
-    CARCH: armv7h
-    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
-      !autodeps)
-  image: zachfi/shell:latest
-  name: make-repo-armv7h
   volumes:
   - name: cache
     path: /repo
