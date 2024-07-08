@@ -48,7 +48,13 @@ image:
 publish:
 	@for r in $(archs); do sudo docker push zachfi/aur:$$r; done
 
-.PHONY: drone
+.PHONY: drone drone-signature
 drone:
 	@drone jsonnet --stream --format
-	@drone lint
+	@drone lint --trusted
+
+drone-signature:
+ifndef DRONE_TOKEN
+	$(error DRONE_TOKEN is not set, visit https://drone.zach.fi/account)
+endif
+	DRONE_SERVER=https://drone.zach.fi drone sign --save zachfi/iotcontroller .drone.yml
