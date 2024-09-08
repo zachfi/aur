@@ -16,3 +16,6 @@
 [submodule "nodemanager-bin"]
 	path = nodemanager-bin
 	url = https://github.com/zachfi/nodemanager-bin.git
+[submodule "grafana-alloy"]
+	path = grafana-alloy
+	url = https://aur.archlinux.org/grafana-alloy.git
