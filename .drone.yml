@@ -75,11 +75,37 @@ steps:
   - name: cache
     path: /repo
 - commands:
+  - cd zen-browser-bin
+  - makepkg -c
+  environment:
+    CARCH: x86_64
+    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
+      !autodeps)
+  image: zachfi/shell:latest
+  name: build-pkg-zen-browser-bin-x86_64
+  volumes:
+  - name: cache
+    path: /repo
+- commands:
+  - cd zen-browser-avx2-bin
+  - makepkg -c
+  environment:
+    CARCH: x86_64
+    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
+      !autodeps)
+  image: zachfi/shell:latest
+  name: build-pkg-zen-browser-avx2-bin-x86_64
+  volumes:
+  - name: cache
+    path: /repo
+- commands:
   - cp nodemanager-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp k3s-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp gomplate-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp duo_unix/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp grafana-alloy/*x86_64*.pkg.tar.zst /repo/x86_64
+  - cp zen-browser-bin/*x86_64*.pkg.tar.zst /repo/x86_64
+  - cp zen-browser-avx2-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - rm /repo/x86_64/*-debug-*
   - repo-add /repo/x86_64/custom.db.tar.gz /repo/x86_64/*pkg.tar.zst
   environment:
@@ -124,6 +150,6 @@ volumes:
   name: dockersock
 ---
 kind: signature
-hmac: fcfa088282b8eede9d789b6ea9b1b1bc1fc06a86a6a5b6ef61e3542106c864ac
+hmac: 69123631e2d0ba1a1ebeec923e348f5afd76d9b58e167077352264206c8c48aa
 
 ...
