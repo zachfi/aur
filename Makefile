@@ -2,7 +2,7 @@
 
 archs = x86_64 armv7h aarch64
 pkgs = nodemanager-bin
-subs = duo_unix gomplate-bin k3s-bin libnvidia-container nvidia-container-runtime nvidia-container-toolkit
+subs = duo_unix gomplate-bin k3s-bin libnvidia-container nvidia-container-runtime nvidia-container-toolkit zen-browser-bin zen-browser-avx2-bin
 
 REPODIR ?= $(shell pwd)/repo
 
@@ -57,4 +57,4 @@ drone-signature:
 ifndef DRONE_TOKEN
 	$(error DRONE_TOKEN is not set, visit https://drone.zach.fi/account)
 endif
-	DRONE_SERVER=https://drone.zach.fi drone sign --save zachfi/iotcontroller .drone.yml
+	@DRONE_SERVER=https://drone.zach.fi drone sign --save zachfi/aur .drone.yml
