@@ -1,6 +1,6 @@
 local repoArchs = ['x86_64'];
 local repoPkgs = ['nodemanager-bin', 'k3s-bin', 'gomplate-bin', 'duo_unix', 'grafana-alloy', 'zen-browser-bin', 'zen-browser-avx2-bin'];
-local image = 'zachfi/shell:latest';
+local image = 'reg.dist.svc.cluster.znet:5000/zachfi/shell:latest';
 local cacheBase = '/repo';
 
 local pipeline(name) = {

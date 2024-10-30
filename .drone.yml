@@ -9,7 +9,7 @@ steps:
   - sudo chown -R makepkg /drone
   - git submodule init
   - git submodule update
-  image: zachfi/shell:latest
+  image: reg.dist.svc.cluster.znet:5000/zachfi/shell:latest
   name: init-repo-x86_64
   volumes:
   - name: cache
@@ -21,7 +21,7 @@ steps:
     CARCH: x86_64
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
       !autodeps)
-  image: zachfi/shell:latest
+  image: reg.dist.svc.cluster.znet:5000/zachfi/shell:latest
   name: build-pkg-nodemanager-bin-x86_64
   volumes:
   - name: cache
@@ -33,7 +33,7 @@ steps:
     CARCH: x86_64
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
       !autodeps)
-  image: zachfi/shell:latest
+  image: reg.dist.svc.cluster.znet:5000/zachfi/shell:latest
   name: build-pkg-k3s-bin-x86_64
   volumes:
   - name: cache
@@ -45,7 +45,7 @@ steps:
     CARCH: x86_64
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
       !autodeps)
-  image: zachfi/shell:latest
+  image: reg.dist.svc.cluster.znet:5000/zachfi/shell:latest
   name: build-pkg-gomplate-bin-x86_64
   volumes:
   - name: cache
@@ -57,7 +57,7 @@ steps:
     CARCH: x86_64
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
       !autodeps)
-  image: zachfi/shell:latest
+  image: reg.dist.svc.cluster.znet:5000/zachfi/shell:latest
   name: build-pkg-duo_unix-x86_64
   volumes:
   - name: cache
@@ -69,7 +69,7 @@ steps:
     CARCH: x86_64
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
       !autodeps)
-  image: zachfi/shell:latest
+  image: reg.dist.svc.cluster.znet:5000/zachfi/shell:latest
   name: build-pkg-grafana-alloy-x86_64
   volumes:
   - name: cache
@@ -81,7 +81,7 @@ steps:
     CARCH: x86_64
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
       !autodeps)
-  image: zachfi/shell:latest
+  image: reg.dist.svc.cluster.znet:5000/zachfi/shell:latest
   name: build-pkg-zen-browser-bin-x86_64
   volumes:
   - name: cache
@@ -93,7 +93,7 @@ steps:
     CARCH: x86_64
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
       !autodeps)
-  image: zachfi/shell:latest
+  image: reg.dist.svc.cluster.znet:5000/zachfi/shell:latest
   name: build-pkg-zen-browser-avx2-bin-x86_64
   volumes:
   - name: cache
@@ -112,14 +112,14 @@ steps:
     CARCH: x86_64
     OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
       !autodeps)
-  image: zachfi/shell:latest
+  image: reg.dist.svc.cluster.znet:5000/zachfi/shell:latest
   name: make-repo-x86_64
   volumes:
   - name: cache
     path: /repo
 - commands:
   - sudo docker build -t zachfi/aur -f Dockerfile /repo
-  image: zachfi/shell:latest
+  image: reg.dist.svc.cluster.znet:5000/zachfi/shell:latest
   name: build-image
   volumes:
   - name: cache
@@ -134,7 +134,7 @@ steps:
       from_secret: DOCKER_PASSWORD
     DOCKER_USERNAME:
       from_secret: DOCKER_USERNAME
-  image: zachfi/shell:latest
+  image: reg.dist.svc.cluster.znet:5000/zachfi/shell:latest
   name: publish-image
   volumes:
   - name: dockersock
@@ -150,6 +150,6 @@ volumes:
   name: dockersock
 ---
 kind: signature
-hmac: 69123631e2d0ba1a1ebeec923e348f5afd76d9b58e167077352264206c8c48aa
+hmac: f66f917d7572318864a20cdd33c5bc2a985fd285d3840826e33a0950ae60b69a
 
 ...
