@@ -1,6 +1,7 @@
 local repoArchs = ['x86_64'];
 local repoPkgs = ['nodemanager-bin', 'k3s-bin', 'gomplate-bin', 'duo_unix', 'grafana-alloy', 'zen-browser-bin', 'zen-browser-avx2-bin'];
 local image = 'reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest';
+local registry = 'reg.dist.svc.cluster.znet:5000';
 local cacheBase = '/repo';
 
 local pipeline(name) = {
@@ -96,8 +97,8 @@ local publishImage() = {
   image: image,
   commands:
     [
-      'echo $DOCKER_PASSWORD | sudo docker login --username $DOCKER_USERNAME --password-stdin',
-      'sudo docker push zachfi/aur',
+      // 'echo $DOCKER_PASSWORD | sudo docker login --username $DOCKER_USERNAME --password-stdin',
+      'sudo docker push %s/zachfi/aur' % registry,
     ],
   volumes+: [
     { name: 'dockersock', path: '/var/run/docker.sock' },
