@@ -118,7 +118,7 @@ steps:
   - name: cache
     path: /repo
 - commands:
-  - sudo docker build -t zachfi/aur -f Dockerfile /repo
+  - sudo docker build -t reg.dist.svc.cluster.znet:5000/zachfi/aur -f Dockerfile /repo
   image: reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest
   name: build-image
   volumes:
@@ -149,6 +149,6 @@ volumes:
   name: dockersock
 ---
 kind: signature
-hmac: 236f723ce711fbeaeaa3a0a0cc82fd162116b23ed86136e61e1050501b8f5565
+hmac: da3e47b74fb90a966c34a81cbd7c66ad3df0566d039973d4e77c93d2f4439132
 
 ...

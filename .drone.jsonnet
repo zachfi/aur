@@ -84,7 +84,7 @@ local buildImage() = {
   image: image,
   commands:
     [
-      'sudo docker build -t zachfi/aur -f Dockerfile %(dir)s' % { dir: cacheBase },
+      'sudo docker build -t %(reg)s/zachfi/aur -f Dockerfile %(dir)s' % { dir: cacheBase, reg: registry },
     ],
   volumes+: [
     { name: 'cache', path: cacheBase },
