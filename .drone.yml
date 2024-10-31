@@ -127,8 +127,7 @@ steps:
   - name: dockersock
     path: /var/run/docker.sock
 - commands:
-  - echo $DOCKER_PASSWORD | sudo docker login --username $DOCKER_USERNAME --password-stdin
-  - sudo docker push zachfi/aur
+  - sudo docker push reg.dist.svc.cluster.znet:5000/zachfi/aur
   environment:
     DOCKER_PASSWORD:
       from_secret: DOCKER_PASSWORD
@@ -150,6 +149,6 @@ volumes:
   name: dockersock
 ---
 kind: signature
-hmac: 3ab71bd83208f68568af49e60d29aef1a5079195ac1b4e33616082fd41f1c8aa
+hmac: 236f723ce711fbeaeaa3a0a0cc82fd162116b23ed86136e61e1050501b8f5565
 
 ...
