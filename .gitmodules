@@ -19,3 +19,9 @@
 [submodule "grafana-alloy"]
 	path = grafana-alloy
 	url = https://aur.archlinux.org/grafana-alloy.git
+[submodule "zen-browser-avx2-bin"]
+	path = zen-browser-avx2-bin
+	url = https://aur.archlinux.org/zen-browser-avx2-bin.git
+[submodule "zen-browser-bin"]
+	path = zen-browser-bin
+	url = https://aur.archlinux.org/zen-browser-bin.git
