@@ -141,6 +141,11 @@ steps:
   when:
     branch:
     - main
+trigger:
+  branch:
+  - master
+  event:
+  - push
 volumes:
 - name: cache
   temp: {}
@@ -149,6 +154,6 @@ volumes:
   name: dockersock
 ---
 kind: signature
-hmac: da3e47b74fb90a966c34a81cbd7c66ad3df0566d039973d4e77c93d2f4439132
+hmac: 3e563162fa752a2d71312590a5dffc373875ff55b9595d96fecb4b6b807cdd75
 
 ...

@@ -13,6 +13,10 @@ local pipeline(name) = {
     { name: 'cache', temp: {} },
     { name: 'dockersock', host: { path: '/var/run/docker.sock' } },
   ],
+  trigger: {
+    branch: ['master'],
+    event: ['push'],
+  },
 };
 
 local step(name) = {
