@@ -143,7 +143,7 @@ steps:
     - main
 trigger:
   branch:
-  - master
+  - main
   event:
   - push
 volumes:
@@ -154,6 +154,6 @@ volumes:
   name: dockersock
 ---
 kind: signature
-hmac: 3e563162fa752a2d71312590a5dffc373875ff55b9595d96fecb4b6b807cdd75
+hmac: 188768b380a40875ca008ea64b48262574b6b8d644a38cecf3cd527e860d022d
 
 ...

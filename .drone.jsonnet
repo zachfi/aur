@@ -14,7 +14,7 @@ local pipeline(name) = {
     { name: 'dockersock', host: { path: '/var/run/docker.sock' } },
   ],
   trigger: {
-    branch: ['master'],
+    branch: ['main'],
     event: ['push'],
   },
 };
