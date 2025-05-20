@@ -25,3 +25,6 @@
 [submodule "zen-browser-avx2-bin"]
 	path = zen-browser-avx2-bin
 	url = https://aur.archlinux.org/zen-browser-avx2-bin.git
+[submodule "walker-bin"]
+	path = walker-bin
+	url = https://aur.archlinux.org/walker-bin.git
