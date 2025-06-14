@@ -75,18 +75,6 @@ steps:
   - name: cache
     path: /repo
 - commands:
-  - cd zen-browser-bin
-  - makepkg -c
-  environment:
-    CARCH: x86_64
-    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
-      !autodeps)
-  image: reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest
-  name: build-pkg-zen-browser-bin-x86_64
-  volumes:
-  - name: cache
-    path: /repo
-- commands:
   - cd zen-browser-avx2-bin
   - makepkg -c
   environment:
@@ -99,26 +87,12 @@ steps:
   - name: cache
     path: /repo
 - commands:
-  - cd walker-bin
-  - makepkg -c
-  environment:
-    CARCH: x86_64
-    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
-      !autodeps)
-  image: reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest
-  name: build-pkg-walker-bin-x86_64
-  volumes:
-  - name: cache
-    path: /repo
-- commands:
   - cp nodemanager-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp k3s-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp gomplate-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp duo_unix/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp grafana-alloy/*x86_64*.pkg.tar.zst /repo/x86_64
-  - cp zen-browser-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp zen-browser-avx2-bin/*x86_64*.pkg.tar.zst /repo/x86_64
-  - cp walker-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - rm /repo/x86_64/*-debug-*
   - repo-add /repo/x86_64/custom.db.tar.gz /repo/x86_64/*pkg.tar.zst
   environment:
@@ -165,8 +139,3 @@ volumes:
 - host:
     path: /var/run/docker.sock
   name: dockersock
----
-kind: signature
-hmac: 1c1f173dda75a82e0108ed09a2bf777b3b233d660e8ab2dfcae2e8d801e5e18a
-
-...

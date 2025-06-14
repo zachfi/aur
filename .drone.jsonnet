@@ -1,5 +1,14 @@
 local repoArchs = ['x86_64'];
-local repoPkgs = ['nodemanager-bin', 'k3s-bin', 'gomplate-bin', 'duo_unix', 'grafana-alloy', 'zen-browser-bin', 'zen-browser-avx2-bin', 'walker-bin'];
+local repoPkgs = [
+  'nodemanager-bin',
+  'k3s-bin',
+  'gomplate-bin',
+  'duo_unix',
+  'grafana-alloy',
+  // 'zen-browser-bin',
+  'zen-browser-avx2-bin',
+  // 'walker-bin'
+];
 local image = 'reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest';
 local registry = 'reg.dist.svc.cluster.znet:5000';
 local cacheBase = '/repo';
