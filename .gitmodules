@@ -28,3 +28,6 @@
 [submodule "walker-bin"]
 	path = walker-bin
 	url = https://aur.archlinux.org/walker-bin.git
+[submodule "openbgpd"]
+	path = openbgpd
+	url = https://aur.archlinux.org/openbgpd.git
