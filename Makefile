@@ -16,6 +16,11 @@ modules:
 	@git submodule init
 	@git submodule update --recursive --remote
 
+cd: modules
+	@for pkg in $(pkgs); do git add $$pkg; done
+	@git ci -m 'Updates'
+	@git push origin main
+
 chown:
 	@sudo chown -R makepkg $(REPODIR)/
 
