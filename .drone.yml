@@ -63,18 +63,6 @@ steps:
   - name: cache
     path: /repo
 - commands:
-  - cd grafana-alloy
-  - makepkg -c
-  environment:
-    CARCH: x86_64
-    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
-      !autodeps)
-  image: reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest
-  name: build-pkg-grafana-alloy-x86_64
-  volumes:
-  - name: cache
-    path: /repo
-- commands:
   - cd zen-browser-avx2-bin
   - makepkg -c
   environment:
@@ -91,7 +79,6 @@ steps:
   - cp k3s-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp gomplate-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp duo_unix/*x86_64*.pkg.tar.zst /repo/x86_64
-  - cp grafana-alloy/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp zen-browser-avx2-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - rm /repo/x86_64/*-debug-*
   - repo-add /repo/x86_64/custom.db.tar.gz /repo/x86_64/*pkg.tar.zst
@@ -141,6 +128,6 @@ volumes:
   name: dockersock
 ---
 kind: signature
-hmac: 0297ef7985133350fdc733ff733ace0eeecc9997b5c2a142a3ef1ef0bd21f504
+hmac: b0f758b87f468ce9e2a8e46bdcd11e233b0af78b266db38d773539ecad01059c
 
 ...

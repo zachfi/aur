@@ -4,7 +4,7 @@ local repoPkgs = [
   'k3s-bin',
   'gomplate-bin',
   'duo_unix',
-  'grafana-alloy',
+  // 'grafana-alloy',
   // 'zen-browser-bin',
   'zen-browser-avx2-bin',
   // 'walker-bin'
