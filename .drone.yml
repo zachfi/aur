@@ -75,11 +75,24 @@ steps:
   - name: cache
     path: /repo
 - commands:
+  - cd dms-shell-bin
+  - makepkg -c
+  environment:
+    CARCH: x86_64
+    OPTIONS: (!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto
+      !autodeps)
+  image: reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest
+  name: build-pkg-dms-shell-bin-x86_64
+  volumes:
+  - name: cache
+    path: /repo
+- commands:
   - cp nodemanager-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp k3s-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp gomplate-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp duo_unix/*x86_64*.pkg.tar.zst /repo/x86_64
   - cp zen-browser-avx2-bin/*x86_64*.pkg.tar.zst /repo/x86_64
+  - cp dms-shell-bin/*x86_64*.pkg.tar.zst /repo/x86_64
   - rm /repo/x86_64/*-debug-*
   - repo-add /repo/x86_64/custom.db.tar.gz /repo/x86_64/*pkg.tar.zst
   environment:
@@ -128,6 +141,6 @@ volumes:
   name: dockersock
 ---
 kind: signature
-hmac: b0f758b87f468ce9e2a8e46bdcd11e233b0af78b266db38d773539ecad01059c
+hmac: 94a1ef11b2290a25e5d3e609689a00c4413edb473951c0d81e7bc9424015d3fc
 
 ...

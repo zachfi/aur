@@ -31,3 +31,6 @@
 [submodule "openbgpd"]
 	path = openbgpd
 	url = https://aur.archlinux.org/openbgpd.git
+[submodule "dms-shell-bin"]
+	path = dms-shell-bin
+	url = https://aur.archlinux.org/dms-shell-bin.git

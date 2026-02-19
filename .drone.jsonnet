@@ -7,6 +7,7 @@ local repoPkgs = [
   // 'grafana-alloy',
   // 'zen-browser-bin',
   'zen-browser-avx2-bin',
+  'dms-shell-bin',
   // 'walker-bin'
 ];
 local image = 'reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest';
