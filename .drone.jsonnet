@@ -8,6 +8,10 @@ local repoPkgs = [
   // 'zen-browser-bin',
   'zen-browser-avx2-bin',
   'dms-shell-bin',
+  'greetd-dms-greeter-git',
+  'dgop-bin',
+  'dsearch-bin',
+  'claude-code',
   // 'walker-bin'
 ];
 local image = 'reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest';
