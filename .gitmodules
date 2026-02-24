@@ -34,3 +34,18 @@
 [submodule "dms-shell-bin"]
 	path = dms-shell-bin
 	url = https://aur.archlinux.org/dms-shell-bin.git
+[submodule "claude-code"]
+	path = claude-code
+	url = https://aur.archlinux.org/claude-code.git
+[submodule "dms-greeter-git"]
+	path = dms-greeter-git
+	url = https://aur.archlinux.org/greetd-dms-greeter-git.git
+[submodule "dgop-bin"]
+	path = dgop-bin
+	url = https://aur.archlinux.org/dgop-bin.git
+[submodule "dsearch-bin"]
+	path = dsearch-bin
+	url = https://aur.archlinux.org/dsearch-bin.git
+[submodule "greetd-dms-greeter-git"]
+	path = greetd-dms-greeter-git
+	url = https://aur.archlinux.org/greetd-dms-greeter-git.git
