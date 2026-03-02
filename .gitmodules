@@ -49,3 +49,6 @@
 [submodule "greetd-dms-greeter-git"]
 	path = greetd-dms-greeter-git
 	url = https://aur.archlinux.org/greetd-dms-greeter-git.git
+[submodule "mangowc"]
+	path = mangowc
+	url = https://aur.archlinux.org/mangowc.git

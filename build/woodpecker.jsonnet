@@ -23,6 +23,7 @@ local repoPkgs = [
   'dgop-bin',
   'dsearch-bin',
   'claude-code',
+  'mangowc',
 ];
 
 local options = '(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)';
@@ -75,11 +76,11 @@ local buildPkg(pkg, arch) = step(
 local mkRepo(arch) = step(
   name='make-repo-' + arch,
   commands=
-    ['cp %(pkg)s/*%(arch)s*.pkg.tar.zst /repo/%(arch)s' % { pkg: pkg, arch: arch } for pkg in repoPkgs]
-    + [
-      "find /repo/%(arch)s -name '*-debug-*' -exec rm {} \\;" % { arch: arch },
-      'repo-add /repo/%(a)s/custom.db.tar.gz /repo/%(a)s/*pkg.tar.zst' % { a: arch },
-    ],
+  ['cp %(pkg)s/*%(arch)s*.pkg.tar.zst /repo/%(arch)s' % { pkg: pkg, arch: arch } for pkg in repoPkgs]
+  + [
+    "find /repo/%(arch)s -name '*-debug-*' -exec rm {} \\;" % { arch: arch },
+    'repo-add /repo/%(a)s/custom.db.tar.gz /repo/%(a)s/*pkg.tar.zst' % { a: arch },
+  ],
   volumes=repoVol,
   environment=pkgEnv(arch),
 );
