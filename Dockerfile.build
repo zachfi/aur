@@ -1,0 +1,37 @@
+FROM archlinux:latest
+
+# Refresh keyring first to avoid signature verification failures on fresh pulls
+RUN pacman-key --init \
+    && pacman-key --populate archlinux \
+    && pacman -Sy --noconfirm archlinux-keyring \
+    && pacman -Syu --noconfirm
+
+# Install build toolchain and runtime deps
+#   base-devel  - gcc, make, autoconf, automake, fakeroot, binutils, etc.
+#   git         - submodule checkout and git-based PKGBUILDs
+#   sudo        - privilege escalation for repo dirs and docker socket
+#   docker      - CLI for building/pushing the final repo image
+#   curl        - source downloads during makepkg
+#   pam         - dev headers needed by duo_unix build
+RUN pacman -S --noconfirm --needed \
+        base-devel \
+        git \
+        sudo \
+        docker \
+        curl \
+        pam \
+    && pacman -Scc --noconfirm
+
+# Passwordless sudo for wheel group
+RUN echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/wheel \
+    && chmod 0440 /etc/sudoers.d/wheel
+
+# makepkg refuses to run as root; create a dedicated user
+# Docker socket GID is handled at runtime via --group-add $(DOCKER_GID)
+RUN useradd -m -G wheel makepkg
+
+USER makepkg
+WORKDIR /workspace
+
+# Default entrypoint lets `docker run ... ci` translate to `make ci`
+ENTRYPOINT ["make"]
