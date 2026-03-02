@@ -5,8 +5,8 @@
 #                             REPO_IMAGE_NAME, REPO_IMAGE_FULL, REPODIR
 #
 # Pass registry= on the command line to tag and push to a registry:
-#   make build-image registry=reg.dist.svc.cluster.znet:5000
-#   make push-build-image registry=reg.dist.svc.cluster.znet:5000
+#   make build-image registry=your.registry.example:5000
+#   make push-build-image registry=your.registry.example:5000
 #
 
 DOCKER_GID ?= $(shell stat -c '%g' /var/run/docker.sock 2>/dev/null || echo 999)
@@ -39,10 +39,12 @@ build-image-push: build-image push-build-image
 
 .PHONY: ci-docker
 ci-docker: build-image
-	@docker run --rm -it \
+	@docker run --rm $$([ -t 1 ] && echo "-it") \
+		--user $$(id -u):$$(id -g) \
+		--group-add $(DOCKER_GID) \
+		-e HOME=/tmp \
 		-v "$(CURDIR):/workspace" \
 		-v /var/run/docker.sock:/var/run/docker.sock \
-		--group-add $(DOCKER_GID) \
 		-e registry="$(registry)" \
 		-e IMAGE="$(REPO_IMAGE_NAME)" \
 		-w /workspace \

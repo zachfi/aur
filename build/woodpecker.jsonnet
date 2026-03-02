@@ -1,11 +1,12 @@
 // build/woodpecker.jsonnet — Woodpecker CI pipeline for the AUR package repo
 //
 // Generate .woodpecker.yml via:  make ci-pipeline
+// Registry is injected at generation time:  make woodpecker registry=your.registry.example
 //
 // To add a package: append to repoPkgs. The build, copy, and repo-add steps
 // are derived automatically from that list.
 
-local registry = 'reg.dist.svc.cluster.znet:5000';
+local registry = std.extVar('registry');
 local buildImage = registry + '/zachfi/aur-build-image:latest';
 local repoImage = registry + '/zachfi/aur';
 

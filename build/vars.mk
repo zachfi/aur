@@ -2,7 +2,7 @@
 # build/vars.mk — Project-level variables
 #
 # Override on the command line or in the environment:
-#   registry=reg.dist.svc.cluster.znet:5000   — prefix all images with this registry
+#   registry=your.registry.example:5000   — prefix all images with this registry
 #   archs=x86_64                               — target architectures
 #
 # Lowercase `registry` follows the same convention as zachfi/streamgo.
