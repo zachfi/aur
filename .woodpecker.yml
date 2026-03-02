@@ -1,0 +1,175 @@
+"steps":
+- "commands":
+  - "sudo mkdir -p /repo/x86_64"
+  - "sudo chown -R makepkg /repo"
+  - "sudo chown -R makepkg \"$CI_WORKSPACE\""
+  - "git submodule init"
+  - "git submodule update"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "init-repo-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "cd nodemanager-bin && makepkg -c"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "build-pkg-nodemanager-bin-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "cd k3s-bin && makepkg -c"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "build-pkg-k3s-bin-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "cd gomplate-bin && makepkg -c"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "build-pkg-gomplate-bin-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "cd duo_unix && makepkg -c"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "build-pkg-duo_unix-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "cd zen-browser-avx2-bin && makepkg -c"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "build-pkg-zen-browser-avx2-bin-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "cd dms-shell-bin && makepkg -c"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "build-pkg-dms-shell-bin-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "cd greetd-dms-greeter-git && makepkg -c"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "build-pkg-greetd-dms-greeter-git-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "cd dgop-bin && makepkg -c"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "build-pkg-dgop-bin-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "cd dsearch-bin && makepkg -c"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "build-pkg-dsearch-bin-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "cd claude-code && makepkg -c"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "build-pkg-claude-code-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "cp nodemanager-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
+  - "cp k3s-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
+  - "cp gomplate-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
+  - "cp duo_unix/*x86_64*.pkg.tar.zst /repo/x86_64"
+  - "cp zen-browser-avx2-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
+  - "cp dms-shell-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
+  - "cp greetd-dms-greeter-git/*x86_64*.pkg.tar.zst /repo/x86_64"
+  - "cp dgop-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
+  - "cp dsearch-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
+  - "cp claude-code/*x86_64*.pkg.tar.zst /repo/x86_64"
+  - "find /repo/x86_64 -name '*-debug-*' -exec rm {} \\;"
+  - "repo-add /repo/x86_64/custom.db.tar.gz /repo/x86_64/*pkg.tar.zst"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "make-repo-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "sudo docker build -t reg.dist.svc.cluster.znet:5000/zachfi/aur -f Dockerfile /repo"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "build-image"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+  - "name": "dockersock"
+    "path": "/var/run/docker.sock"
+- "commands":
+  - "sudo docker push reg.dist.svc.cluster.znet:5000/zachfi/aur"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "publish-image"
+  "pull": true
+  "volumes":
+  - "name": "dockersock"
+    "path": "/var/run/docker.sock"
+  "when":
+  - "branch": "main"
+    "event": "push"
+"volumes":
+- "name": "repo"
+  "temp": {}
+- "host":
+    "path": "/var/run/docker.sock"
+  "name": "dockersock"
+"when":
+- "branch": "main"
+  "event": "push"
