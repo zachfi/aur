@@ -19,10 +19,17 @@ chown:
 
 # Build all packages for a given arch.  Runs makepkg in a subshell per package
 # so directory state is isolated (no pushd/popd required).
+# After building a package listed in local_deps, installs it into the build
+# environment so that subsequent packages can satisfy their runtime deps.
 .PHONY: packages-%
 packages-%:
 	@for pkg in $(pkgs); do \
-		(cd $$pkg && CARCH=$* OPTIONS=$(OPTIONS) makepkg -c); \
+		(cd $$pkg && CARCH=$* OPTIONS=$(OPTIONS) makepkg -c) || exit 1; \
+		for dep in $(local_deps); do \
+			if [ "$$pkg" = "$$dep" ]; then \
+				sudo pacman -U --noconfirm $$(ls $$pkg/*.pkg.tar.zst | grep -v -- '-debug-'); \
+			fi; \
+		done; \
 	done
 
 # Assemble the pacman repo for a single arch.

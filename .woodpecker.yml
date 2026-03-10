@@ -67,6 +67,28 @@
   - "name": "repo"
     "path": "/repo"
 - "commands":
+  - "cd dgop-bin && makepkg -c"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "build-pkg-dgop-bin-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "sudo pacman -U --noconfirm $(ls dgop-bin/*.pkg.tar.zst | grep -v -- '-debug-')"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "install-dep-dgop-bin-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
   - "cd dms-shell-bin && makepkg -c"
   "environment":
     "CARCH": "x86_64"
@@ -84,17 +106,6 @@
     "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
   "name": "build-pkg-greetd-dms-greeter-git-x86_64"
-  "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
-- "commands":
-  - "cd dgop-bin && makepkg -c"
-  "environment":
-    "CARCH": "x86_64"
-    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
-  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
-  "name": "build-pkg-dgop-bin-x86_64"
   "pull": true
   "volumes":
   - "name": "repo"
@@ -122,12 +133,34 @@
   - "name": "repo"
     "path": "/repo"
 - "commands":
-  - "cd mangowc && makepkg -c"
+  - "cd scenefx0.4 && makepkg -c"
   "environment":
     "CARCH": "x86_64"
     "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
-  "name": "build-pkg-mangowc-x86_64"
+  "name": "build-pkg-scenefx0.4-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "sudo pacman -U --noconfirm $(ls scenefx0.4/*.pkg.tar.zst | grep -v -- '-debug-')"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "install-dep-scenefx0.4-x86_64"
+  "pull": true
+  "volumes":
+  - "name": "repo"
+    "path": "/repo"
+- "commands":
+  - "cd mangowm && makepkg -c"
+  "environment":
+    "CARCH": "x86_64"
+    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
+  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build-image:latest"
+  "name": "build-pkg-mangowm-x86_64"
   "pull": true
   "volumes":
   - "name": "repo"
@@ -138,12 +171,13 @@
   - "cp gomplate-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
   - "cp duo_unix/*x86_64*.pkg.tar.zst /repo/x86_64"
   - "cp zen-browser-avx2-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
+  - "cp dgop-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
   - "cp dms-shell-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
   - "cp greetd-dms-greeter-git/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "cp dgop-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
   - "cp dsearch-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
   - "cp claude-code/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "cp mangowc/*x86_64*.pkg.tar.zst /repo/x86_64"
+  - "cp scenefx0.4/*x86_64*.pkg.tar.zst /repo/x86_64"
+  - "cp mangowm/*x86_64*.pkg.tar.zst /repo/x86_64"
   - "find /repo/x86_64 -name '*-debug-*' -exec rm {} \\;"
   - "repo-add /repo/x86_64/custom.db.tar.gz /repo/x86_64/*pkg.tar.zst"
   "environment":

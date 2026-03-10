@@ -13,22 +13,68 @@ RUN pacman-key --init \
 #   docker      - CLI for building/pushing the final repo image
 #   curl        - source downloads during makepkg
 #   pam         - dev headers needed by duo_unix build
-RUN pacman -S --noconfirm --needed \
+#
+# Re-sync the DB before installing: the -Syu layer above may be Docker-cached
+# while mirrors have moved on, causing 404s on stale package versions.
+RUN pacman -Sy --noconfirm && pacman -S --noconfirm --needed \
         base-devel \
         git \
         sudo \
         docker \
         curl \
         pam \
+        \
+        # zen-browser-avx2-bin runtime deps
+        gtk3 \
+        libxt \
+        mailcap \
+        dbus-glib \
+        nss \
+        ttf-dejavu \
+        \
+        # dms-shell-bin / greetd-dms-greeter-git runtime deps
+        accountsservice \
+        quickshell \
+        greetd \
+        \
+        # mangowm runtime + build deps
+        # wlroots0.19 provides libwlroots-0.19.so required by mangowm and scenefx0.4
+        wlroots0.19 \
+        wayland \
+        libinput \
+        libdrm \
+        pixman \
+        libxkbcommon \
+        pcre2 \
+        meson \
+        ninja \
+        wayland-protocols \
+        \
+        # scenefx0.4 build deps
+        glslang \
+        libglvnd \
     && pacman -Scc --noconfirm
 
-# Passwordless sudo for wheel group
-RUN echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/wheel \
-    && chmod 0440 /etc/sudoers.d/wheel
+# Passwordless sudo for any registered user (build container only).
+# The entrypoint script registers the runtime UID in /etc/passwd so that
+# sudo can resolve the invoking user when running with --user UID:GID.
+# Replace sudo's PAM config with pam_permit so that dynamically-added users
+# (those without a /etc/shadow entry) pass account management checks.
+RUN echo 'ALL ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/all \
+    && chmod 0440 /etc/sudoers.d/all \
+    && printf '#%%PAM-1.0\nauth sufficient pam_permit.so\naccount sufficient pam_permit.so\nsession optional pam_permit.so\n' > /etc/pam.d/sudo
 
 # makepkg refuses to run as root; create a dedicated user
 # Docker socket GID is handled at runtime via --group-add $(DOCKER_GID)
-RUN useradd -m -G wheel makepkg
+# chmod 0666 /etc/passwd is done AFTER useradd because useradd rewrites the
+# file and would reset any earlier chmod.
+RUN useradd -m -G wheel makepkg \
+    && chmod 0666 /etc/passwd
+
+# Entrypoint registers the runtime UID in /etc/passwd (needed when
+# --user UID:GID is passed) then hands off to make.
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod 0755 /usr/local/bin/entrypoint.sh
 
 USER makepkg
 WORKDIR /workspace
@@ -36,5 +82,4 @@ WORKDIR /workspace
 # Trust bind-mounted workspaces owned by a different UID (git 2.35.2+ safe.directory check)
 RUN git config --global --add safe.directory '*'
 
-# Default entrypoint lets `docker run ... ci` translate to `make ci`
-ENTRYPOINT ["make"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

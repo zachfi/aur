@@ -12,18 +12,27 @@ local repoImage = registry + '/zachfi/aur';
 
 local repoArchs = ['x86_64'];
 
+// Packages that must be installed into the build env after building so that
+// subsequent packages can satisfy their runtime dependencies via makepkg.
+// dgop-bin: provides 'dgop' required by dms-shell-bin
+// scenefx0.4: provides 'scenefx0.4' required by mangowm
+local localDeps = ['dgop-bin', 'scenefx0.4'];
+
 local repoPkgs = [
   'nodemanager-bin',
   'k3s-bin',
   'gomplate-bin',
   'duo_unix',
   'zen-browser-avx2-bin',
+  'dgop-bin',    // must precede dms-shell-bin (provides 'dgop')
   'dms-shell-bin',
   'greetd-dms-greeter-git',
-  'dgop-bin',
   'dsearch-bin',
   'claude-code',
-  'mangowc',
+  // scenefx0.4 must be listed before mangowm — it provides scenefx0.4 which
+  // mangowm requires at runtime.  Not available in pacman repos (AUR only).
+  'scenefx0.4',
+  'mangowm',
 ];
 
 local options = '(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)';
@@ -73,6 +82,13 @@ local buildPkg(pkg, arch) = step(
   environment=pkgEnv(arch),
 );
 
+local installLocalDep(pkg, arch) = step(
+  name='install-dep-' + pkg + '-' + arch,
+  commands=['sudo pacman -U --noconfirm $(ls ' + pkg + '/*.pkg.tar.zst | grep -v -- \'-debug-\')'],
+  volumes=repoVol,
+  environment=pkgEnv(arch),
+);
+
 local mkRepo(arch) = step(
   name='make-repo-' + arch,
   commands=
@@ -101,9 +117,16 @@ local publishDockerImage() = step(
 // ---------------------------------------------------------------------------
 // Assemble pipeline
 // ---------------------------------------------------------------------------
+local buildSteps(arch) = std.flatMap(
+  function(pkg)
+    [buildPkg(pkg, arch)] +
+    (if std.member(localDeps, pkg) then [installLocalDep(pkg, arch)] else []),
+  repoPkgs
+);
+
 local steps =
   [initRepo(arch) for arch in repoArchs]
-  + [buildPkg(pkg, arch) for arch in repoArchs for pkg in repoPkgs]
+  + std.flatMap(buildSteps, repoArchs)
   + [mkRepo(arch) for arch in repoArchs]
   + [buildDockerImage(), publishDockerImage()];
 
