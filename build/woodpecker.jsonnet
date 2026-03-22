@@ -7,7 +7,7 @@
 // are derived automatically from that list.
 
 local registry = std.extVar('registry');
-local buildImage = registry + '/zachfi/aur-build-image:latest';
+local buildImage = registry + '/zachfi/aur-build:latest';
 local repoImage = registry + '/zachfi/aur';
 
 local repoArchs = ['x86_64'];
@@ -33,6 +33,7 @@ local repoPkgs = [
   // mangowm requires at runtime.  Not available in pacman repos (AUR only).
   'scenefx0.4',
   'mangowm',
+  'openbgpd',
 ];
 
 local options = '(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)';

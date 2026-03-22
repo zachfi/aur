@@ -71,6 +71,14 @@ RUN echo 'ALL ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/all \
 RUN useradd -m -G wheel makepkg \
     && chmod 0666 /etc/passwd
 
+# Template gpg.conf for makepkg PGP verification.
+# The entrypoint copies this into a fresh per-run GNUPGHOME (/tmp/.gnupg) so
+# that GPG has correct 700 permissions regardless of which UID runs the build.
+# auto-key-retrieve: fetch any missing signing key from a keyserver on demand.
+RUN mkdir -p /etc/makepkg-gnupg-template \
+    && echo "keyserver-options auto-key-retrieve" \
+       > /etc/makepkg-gnupg-template/gpg.conf
+
 # Entrypoint registers the runtime UID in /etc/passwd (needed when
 # --user UID:GID is passed) then hands off to make.
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
@@ -78,6 +86,13 @@ RUN chmod 0755 /usr/local/bin/entrypoint.sh
 
 USER makepkg
 WORKDIR /workspace
+
+# Initialise makepkg's GPG home from the template so that Woodpecker CI steps
+# (which run commands directly, bypassing entrypoint.sh) also get auto-key-retrieve.
+# The entrypoint still copies this template to /tmp/.gnupg for ci-docker runs.
+RUN mkdir -p /home/makepkg/.gnupg \
+    && chmod 700 /home/makepkg/.gnupg \
+    && cp /etc/makepkg-gnupg-template/gpg.conf /home/makepkg/.gnupg/gpg.conf
 
 # Trust bind-mounted workspaces owned by a different UID (git 2.35.2+ safe.directory check)
 RUN git config --global --add safe.directory '*'

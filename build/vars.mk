@@ -16,7 +16,7 @@ PROJECT_NAME ?= aur
 archs ?= x86_64
 pkgs  = nodemanager-bin k3s-bin gomplate-bin duo_unix zen-browser-avx2-bin \
         dgop-bin dms-shell-bin greetd-dms-greeter-git dsearch-bin claude-code \
-        scenefx0.4 mangowm  # scenefx0.4 must precede mangowm (runtime dep)
+        scenefx0.4 mangowm openbgpd  # scenefx0.4 must precede mangowm (runtime dep)
 
 # Packages that must be installed into the build env after building so that
 # subsequent packages can satisfy their runtime dependencies via makepkg.
@@ -25,7 +25,7 @@ pkgs  = nodemanager-bin k3s-bin gomplate-bin duo_unix zen-browser-avx2-bin \
 local_deps = dgop-bin scenefx0.4
 subs  = duo_unix gomplate-bin k3s-bin libnvidia-container nvidia-container-runtime \
         nvidia-container-toolkit zen-browser-bin zen-browser-avx2-bin \
-        scenefx0.4 mangowm  # scenefx0.4: AUR dep of mangowm; not in pacman repos
+        scenefx0.4 mangowm openbgpd  # scenefx0.4: AUR dep of mangowm; not in pacman repos
 
 REPODIR ?= $(CURDIR)/repo
 

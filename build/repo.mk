@@ -17,6 +17,11 @@ modules:
 chown:
 	@sudo chown -R makepkg $(REPODIR)/
 
+# Build a single package: make build-pkg pkg=<pkgname> [arch=x86_64]
+.PHONY: build-pkg
+build-pkg:
+	@(cd $(pkg) && CARCH=$(or $(arch),x86_64) OPTIONS=$(OPTIONS) makepkg -c)
+
 # Build all packages for a given arch.  Runs makepkg in a subshell per package
 # so directory state is isolated (no pushd/popd required).
 # After building a package listed in local_deps, installs it into the build
