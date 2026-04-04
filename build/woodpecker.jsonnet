@@ -28,7 +28,6 @@ local repoPkgs = [
   'dms-shell-bin',
   'greetd-dms-greeter-git',
   'dsearch-bin',
-  'claude-code',
   // scenefx0.4 must be listed before mangowm — it provides scenefx0.4 which
   // mangowm requires at runtime.  Not available in pacman repos (AUR only).
   'scenefx0.4',

@@ -15,7 +15,7 @@ PROJECT_NAME ?= aur
 # Package list — keep in sync with build/woodpecker.jsonnet repoPkgs
 archs ?= x86_64
 pkgs  = nodemanager-bin k3s-bin gomplate-bin duo_unix zen-browser-avx2-bin \
-        dgop-bin dms-shell-bin greetd-dms-greeter-git dsearch-bin claude-code \
+        dgop-bin dms-shell-bin greetd-dms-greeter-git dsearch-bin \
         scenefx0.4 mangowm openbgpd  # scenefx0.4 must precede mangowm (runtime dep)
 
 # Packages that must be installed into the build env after building so that

@@ -122,17 +122,6 @@
   - "name": "repo"
     "path": "/repo"
 - "commands":
-  - "cd claude-code && makepkg -c"
-  "environment":
-    "CARCH": "x86_64"
-    "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
-  "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
-  "name": "build-pkg-claude-code-x86_64"
-  "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
-- "commands":
   - "cd scenefx0.4 && makepkg -c"
   "environment":
     "CARCH": "x86_64"
@@ -186,7 +175,6 @@
   - "cp dms-shell-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
   - "cp greetd-dms-greeter-git/*x86_64*.pkg.tar.zst /repo/x86_64"
   - "cp dsearch-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "cp claude-code/*x86_64*.pkg.tar.zst /repo/x86_64"
   - "cp scenefx0.4/*x86_64*.pkg.tar.zst /repo/x86_64"
   - "cp mangowm/*x86_64*.pkg.tar.zst /repo/x86_64"
   - "cp openbgpd/*x86_64*.pkg.tar.zst /repo/x86_64"
