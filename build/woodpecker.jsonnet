@@ -6,34 +6,14 @@
 // To add a package: append to repoPkgs. The build, copy, and repo-add steps
 // are derived automatically from that list.
 
-local registry = std.extVar('registry');
+local registry = 'reg.dist.svc.cluster.znet:5000';
 local buildImage = registry + '/zachfi/aur-build:latest';
 local repoImage = registry + '/zachfi/aur';
 
-local repoArchs = ['x86_64'];
-
-// Packages that must be installed into the build env after building so that
-// subsequent packages can satisfy their runtime dependencies via makepkg.
-// dgop-bin: provides 'dgop' required by dms-shell-bin
-// scenefx0.4: provides 'scenefx0.4' required by mangowm
-local localDeps = ['dgop-bin', 'scenefx0.4'];
-
-local repoPkgs = [
-  'nodemanager-bin',
-  'k3s-bin',
-  'gomplate-bin',
-  'duo_unix',
-  'zen-browser-avx2-bin',
-  'dgop-bin',    // must precede dms-shell-bin (provides 'dgop')
-  'dms-shell-bin',
-  'greetd-dms-greeter-git',
-  'dsearch-bin',
-  // scenefx0.4 must be listed before mangowm — it provides scenefx0.4 which
-  // mangowm requires at runtime.  Not available in pacman repos (AUR only).
-  'scenefx0.4',
-  'mangowm',
-  'openbgpd',
-];
+local p = import 'packages.libsonnet';
+local repoArchs = p.archs;
+local localDeps = p.localDeps;
+local repoPkgs = p.pkgs;
 
 local options = '(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)';
 

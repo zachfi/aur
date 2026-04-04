@@ -13,21 +13,33 @@
 #   JSONNET_IMAGE     — image with jsonnet    (default: alpine:latest)
 #
 
-CI_CONFIG         ?= .woodpecker.yml
-CI_JSONNET_SOURCE ?= build/woodpecker.jsonnet
-JSONNET_IMAGE     ?= alpine:latest
-
-# Mount the repo root read-only so jsonnet can find the source file.
-# registry= is passed as a jsonnet external variable so the source file stays
-# free of site-specific hostnames.  Fork users: set registry= to your own registry.
-JSONNET_CMD = docker run --rm \
-	-v "$(abspath .):/src:ro" \
-	-w /src \
-	$(JSONNET_IMAGE) \
-	sh -c 'apk add -q --no-cache jsonnet && jsonnet -S --ext-str registry=$(registry) $(CI_JSONNET_SOURCE)'
+CI_CONFIG           ?= .woodpecker.yml
+CI_JSONNET_SOURCE   ?= build/woodpecker.jsonnet
+PACKAGES_JSONNET    ?= build/packages.jsonnet
+PACKAGES_MK         ?= build/packages.auto.mk
+JSONNET_IMAGE       ?= alpine:latest
 
 .PHONY: ci-pipeline
 ci-pipeline:
 	@echo "=== $(PROJECT_NAME) === [ ci-pipeline      ]: rendering $(CI_CONFIG) from $(CI_JSONNET_SOURCE)..."
-	@$(JSONNET_CMD) > $(CI_CONFIG)
+	@docker run --rm \
+		-v "$(abspath .):/src:ro" \
+		-w /src \
+		$(JSONNET_IMAGE) \
+		sh -c 'apk add -q --no-cache jsonnet && jsonnet -S $(CI_JSONNET_SOURCE)' \
+		> $(CI_CONFIG)
 	@echo "=== $(PROJECT_NAME) === [ ci-pipeline      ]: wrote $(CI_CONFIG)"
+
+# Regenerate build/packages.auto.mk from build/packages.libsonnet.
+# Included by build/vars.mk; commit alongside .woodpecker.yml after any
+# package list change.
+.PHONY: packages-mk
+packages-mk:
+	@echo "=== $(PROJECT_NAME) === [ packages-mk      ]: rendering $(PACKAGES_MK) from $(PACKAGES_JSONNET)..."
+	@docker run --rm \
+		-v "$(abspath .):/src:ro" \
+		-w /src \
+		$(JSONNET_IMAGE) \
+		sh -c 'apk add -q --no-cache jsonnet && jsonnet -S $(PACKAGES_JSONNET)' \
+		> $(PACKAGES_MK)
+	@echo "=== $(PROJECT_NAME) === [ packages-mk      ]: wrote $(PACKAGES_MK)"

@@ -2,11 +2,7 @@
 # build/docker.mk — Docker targets for the build image and repo image
 #
 # Expects build/vars.mk for: BUILD_IMAGE_NAME, BUILD_IMAGE_TAG, BUILD_IMAGE_FULL,
-#                             REPO_IMAGE_NAME, REPO_IMAGE_FULL, REPODIR
-#
-# Pass registry= on the command line to tag and push to a registry:
-#   make build-image registry=your.registry.example:5000
-#   make push-build-image registry=your.registry.example:5000
+#                             REPO_IMAGE_NAME, REPO_IMAGE_FULL, REPODIR, REGISTRY
 #
 
 DOCKER_GID ?= $(shell stat -c '%g' /var/run/docker.sock 2>/dev/null || echo 999)
@@ -19,9 +15,7 @@ DOCKER_GID ?= $(shell stat -c '%g' /var/run/docker.sock 2>/dev/null || echo 999)
 build-image:
 	@echo "=== $(PROJECT_NAME) === [ build-image      ]: building $(BUILD_IMAGE_FULL):$(BUILD_IMAGE_TAG)..."
 	@docker build --network host -f Dockerfile.build -t $(BUILD_IMAGE_FULL):$(BUILD_IMAGE_TAG) .
-	@if [ -n "$(registry)" ]; then \
-		docker tag $(BUILD_IMAGE_FULL):$(BUILD_IMAGE_TAG) $(BUILD_IMAGE_NAME):$(BUILD_IMAGE_TAG); \
-	fi
+	@docker tag $(BUILD_IMAGE_FULL):$(BUILD_IMAGE_TAG) $(BUILD_IMAGE_NAME):$(BUILD_IMAGE_TAG)
 
 .PHONY: push-build-image
 push-build-image:
@@ -45,7 +39,7 @@ ci-docker: build-image
 		-e HOME=/tmp \
 		-v "$(CURDIR):/workspace" \
 		-v /var/run/docker.sock:/var/run/docker.sock \
-		-e registry="$(registry)" \
+		-e REGISTRY="$(REGISTRY)" \
 		-e IMAGE="$(REPO_IMAGE_NAME)" \
 		-w /workspace \
 		$(BUILD_IMAGE_FULL):$(BUILD_IMAGE_TAG) ci

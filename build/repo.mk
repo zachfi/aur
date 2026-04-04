@@ -4,11 +4,20 @@
 # Expects build/vars.mk for: archs, pkgs, REPODIR, OPTIONS
 #
 
-.PHONY: clean modules chown repo
+.PHONY: clean clean-modules distclean modules chown repo
 
 clean:
 	@rm -rf $(REPODIR)/*
 	@rm -f */*.pkg.tar.zst
+
+# Deinit all submodules to remove makepkg build artifacts (src/, pkg/, etc.)
+# leaving git status clean.  Run `make modules` to restore them before building.
+clean-modules:
+	@for sub in $(pkgs); do \
+		git submodule deinit --force $$sub 2>/dev/null || true; \
+	done
+
+distclean: clean clean-modules
 
 modules:
 	@git submodule init

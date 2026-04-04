@@ -7,39 +7,18 @@
 [submodule "k3s-bin"]
 	path = k3s-bin
 	url = https://aur.archlinux.org/k3s-bin.git
-[submodule "nvidia-container-runtime"]
-	path = nvidia-container-runtime
-	url = https://aur.archlinux.org/nvidia-container-runtime.git
-[submodule "libnvidia-container"]
-	path = libnvidia-container
-	url = https://aur.archlinux.org/libnvidia-container.git
 [submodule "nodemanager-bin"]
 	path = nodemanager-bin
 	url = https://github.com/zachfi/nodemanager-bin.git
-[submodule "grafana-alloy"]
-	path = grafana-alloy
-	url = https://aur.archlinux.org/grafana-alloy.git
-[submodule "zen-browser-bin"]
-	path = zen-browser-bin
-	url = https://aur.archlinux.org/zen-browser-bin.git
 [submodule "zen-browser-avx2-bin"]
 	path = zen-browser-avx2-bin
 	url = https://aur.archlinux.org/zen-browser-avx2-bin.git
-[submodule "walker-bin"]
-	path = walker-bin
-	url = https://aur.archlinux.org/walker-bin.git
 [submodule "openbgpd"]
 	path = openbgpd
 	url = https://aur.archlinux.org/openbgpd.git
 [submodule "dms-shell-bin"]
 	path = dms-shell-bin
 	url = https://aur.archlinux.org/dms-shell-bin.git
-[submodule "claude-code"]
-	path = claude-code
-	url = https://aur.archlinux.org/claude-code.git
-[submodule "dms-greeter-git"]
-	path = dms-greeter-git
-	url = https://aur.archlinux.org/greetd-dms-greeter-git.git
 [submodule "dgop-bin"]
 	path = dgop-bin
 	url = https://aur.archlinux.org/dgop-bin.git

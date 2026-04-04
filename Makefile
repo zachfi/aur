@@ -17,5 +17,6 @@ cd: modules
 	@git ci -m 'Updates'
 	@git push origin main
 
-# Render .woodpecker.yml from jsonnet (alias for ci-pipeline)
-woodpecker: ci-pipeline
+# Render .woodpecker.yml and build/packages.auto.mk from jsonnet sources.
+# Run this after any change to build/packages.libsonnet or build/woodpecker.jsonnet.
+woodpecker: ci-pipeline packages-mk
