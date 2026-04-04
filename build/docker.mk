@@ -18,7 +18,7 @@ DOCKER_GID ?= $(shell stat -c '%g' /var/run/docker.sock 2>/dev/null || echo 999)
 .PHONY: build-image
 build-image:
 	@echo "=== $(PROJECT_NAME) === [ build-image      ]: building $(BUILD_IMAGE_FULL):$(BUILD_IMAGE_TAG)..."
-	@docker build -f Dockerfile.build -t $(BUILD_IMAGE_FULL):$(BUILD_IMAGE_TAG) .
+	@docker build --network host -f Dockerfile.build -t $(BUILD_IMAGE_FULL):$(BUILD_IMAGE_TAG) .
 	@if [ -n "$(registry)" ]; then \
 		docker tag $(BUILD_IMAGE_FULL):$(BUILD_IMAGE_TAG) $(BUILD_IMAGE_NAME):$(BUILD_IMAGE_TAG); \
 	fi
@@ -39,7 +39,7 @@ build-image-push: build-image push-build-image
 
 .PHONY: ci-docker
 ci-docker: build-image
-	@docker run --rm $$([ -t 1 ] && echo "-it") \
+	@docker run --rm --network host $$([ -t 1 ] && echo "-it") \
 		--user $$(id -u):$$(id -g) \
 		--group-add $(DOCKER_GID) \
 		-e HOME=/tmp \
@@ -57,9 +57,12 @@ ci-docker: build-image
 .PHONY: docker
 docker: repo
 	@echo "=== $(PROJECT_NAME) === [ docker           ]: building $(REPO_IMAGE_FULL):latest..."
-	@docker build -f Dockerfile -t $(REPO_IMAGE_FULL):latest $(REPODIR)
+	@docker build --network none -f Dockerfile -t $(REPO_IMAGE_FULL):latest $(REPODIR)
+
+.PHONY: push
+push:
+	@echo "=== $(PROJECT_NAME) === [ push             ]: pushing $(REPO_IMAGE_FULL):latest..."
+	@docker push $(REPO_IMAGE_FULL):latest
 
 .PHONY: publish
-publish: docker
-	@echo "=== $(PROJECT_NAME) === [ publish          ]: pushing $(REPO_IMAGE_FULL):latest..."
-	@docker push $(REPO_IMAGE_FULL):latest
+publish: docker push
