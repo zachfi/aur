@@ -7,13 +7,11 @@ pkgs = nodemanager-bin \
         gomplate-bin \
         duo_unix \
         zen-browser-avx2-bin \
-        dgop-bin \
-        dms-shell-bin \
         greetd-dms-greeter-git \
         dsearch-bin \
         scenefx0.4 \
         mangowm \
         openbgpd \
         polychromatic
-local_deps = dgop-bin scenefx0.4
+local_deps = scenefx0.4
 

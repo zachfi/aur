@@ -16,12 +16,6 @@
 [submodule "openbgpd"]
 	path = openbgpd
 	url = https://aur.archlinux.org/openbgpd.git
-[submodule "dms-shell-bin"]
-	path = dms-shell-bin
-	url = https://aur.archlinux.org/dms-shell-bin.git
-[submodule "dgop-bin"]
-	path = dgop-bin
-	url = https://aur.archlinux.org/dgop-bin.git
 [submodule "dsearch-bin"]
 	path = dsearch-bin
 	url = https://aur.archlinux.org/dsearch-bin.git
