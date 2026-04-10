@@ -52,6 +52,7 @@ repo-%:
 	@mkdir -p $(REPODIR)/$*
 	@$(MAKE) packages-$*
 	@cp */*$*.pkg.tar.zst $(REPODIR)/$*
+	@find . -maxdepth 2 -name '*-any.pkg.tar.zst' -exec cp {} $(REPODIR)/$* \;
 	@find $(REPODIR)/$* -name "*-debug-*" -exec rm {} \;
 	@repo-add $(REPODIR)/$*/custom.db.tar.gz $(REPODIR)/$*/*pkg.tar.zst
 
