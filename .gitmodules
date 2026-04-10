@@ -34,3 +34,6 @@
 [submodule "mangowm"]
 	path = mangowm
 	url = https://aur.archlinux.org/mangowm.git
+[submodule "polychromatic"]
+	path = polychromatic
+	url = https://aur.archlinux.org/polychromatic.git

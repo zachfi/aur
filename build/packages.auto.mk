@@ -13,6 +13,7 @@ pkgs = nodemanager-bin \
         dsearch-bin \
         scenefx0.4 \
         mangowm \
-        openbgpd
+        openbgpd \
+        polychromatic
 local_deps = dgop-bin scenefx0.4
 

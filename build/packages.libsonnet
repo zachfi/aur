@@ -33,5 +33,6 @@
     'scenefx0.4',            // must precede mangowm
     'mangowm',
     'openbgpd',
+    'polychromatic',
   ],
 }
