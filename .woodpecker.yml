@@ -155,8 +155,8 @@
   - "cp mangowm/*x86_64*.pkg.tar.zst /repo/x86_64"
   - "cp openbgpd/*x86_64*.pkg.tar.zst /repo/x86_64"
   - "cp polychromatic/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "find . -maxdepth 2 -name '*-any.pkg.tar.zst' -exec cp {} /repo/x86_64 \\;"
-  - "find /repo/x86_64 -name '*-debug-*' -exec rm {} \\;"
+  - "find . -maxdepth 2 -name '*-any.pkg.tar.zst' -exec cp {} /repo/x86_64 +"
+  - "find /repo/x86_64 -name '*-debug-*' -delete"
   - "repo-add /repo/x86_64/custom.db.tar.gz /repo/x86_64/*pkg.tar.zst"
   "environment":
     "CARCH": "x86_64"

@@ -74,8 +74,8 @@ local mkRepo(arch) = step(
   commands=
   ['cp %(pkg)s/*%(arch)s*.pkg.tar.zst /repo/%(arch)s' % { pkg: pkg, arch: arch } for pkg in repoPkgs]
   + [
-    "find . -maxdepth 2 -name '*-any.pkg.tar.zst' -exec cp {} /repo/%(arch)s \\;" % { arch: arch },
-    "find /repo/%(arch)s -name '*-debug-*' -exec rm {} \\;" % { arch: arch },
+    "find . -maxdepth 2 -name '*-any.pkg.tar.zst' -exec cp {} /repo/%(arch)s +" % { arch: arch },
+    "find /repo/%(arch)s -name '*-debug-*' -delete" % { arch: arch },
     'repo-add /repo/%(a)s/custom.db.tar.gz /repo/%(a)s/*pkg.tar.zst' % { a: arch },
   ],
   volumes=repoVol,
