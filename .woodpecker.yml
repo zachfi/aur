@@ -138,8 +138,8 @@
   "volumes":
   - "/var/run/docker.sock:/var/run/docker.sock"
   "when":
-    "branch": "main"
+  - "branch": "main"
     "event": "push"
 "when":
-  "branch": "main"
+- "branch": "main"
   "event": "push"

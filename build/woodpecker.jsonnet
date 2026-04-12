@@ -87,7 +87,7 @@ local publishDockerImage() = step(
   name='publish-image',
   commands=['sudo docker push ' + repoImage],
   volumes=dockerVol,
-  when={ event: 'push', branch: 'main' },
+  when=[{ event: 'push', branch: 'main' }],
 );
 
 // ---------------------------------------------------------------------------
@@ -107,6 +107,6 @@ local steps =
   + [buildDockerImage(), publishDockerImage()];
 
 std.manifestYamlDoc({
-  when: { event: 'push', branch: 'main' },
+  when: [{ event: 'push', branch: 'main' }],
   steps: steps,
 })
