@@ -1,16 +1,11 @@
 "steps":
 - "commands":
-  - "sudo mkdir -p /repo/x86_64"
-  - "sudo chown -R makepkg /repo"
-  - "sudo chown -R makepkg \"$CI_WORKSPACE\""
+  - "mkdir -p repo/x86_64"
   - "git submodule init"
   - "git submodule update"
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "init-repo-x86_64"
   "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
 - "commands":
   - "cd nodemanager-bin && makepkg -c"
   "environment":
@@ -19,9 +14,6 @@
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "build-pkg-nodemanager-bin-x86_64"
   "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
 - "commands":
   - "cd k3s-bin && makepkg -c"
   "environment":
@@ -30,9 +22,6 @@
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "build-pkg-k3s-bin-x86_64"
   "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
 - "commands":
   - "cd gomplate-bin && makepkg -c"
   "environment":
@@ -41,9 +30,6 @@
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "build-pkg-gomplate-bin-x86_64"
   "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
 - "commands":
   - "cd duo_unix && makepkg -c"
   "environment":
@@ -52,9 +38,6 @@
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "build-pkg-duo_unix-x86_64"
   "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
 - "commands":
   - "cd zen-browser-avx2-bin && makepkg -c"
   "environment":
@@ -63,9 +46,6 @@
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "build-pkg-zen-browser-avx2-bin-x86_64"
   "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
 - "commands":
   - "cd greetd-dms-greeter-git && makepkg -c"
   "environment":
@@ -74,9 +54,6 @@
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "build-pkg-greetd-dms-greeter-git-x86_64"
   "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
 - "commands":
   - "cd dsearch-bin && makepkg -c"
   "environment":
@@ -85,9 +62,6 @@
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "build-pkg-dsearch-bin-x86_64"
   "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
 - "commands":
   - "cd scenefx0.4 && makepkg -c"
   "environment":
@@ -96,9 +70,6 @@
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "build-pkg-scenefx0.4-x86_64"
   "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
 - "commands":
   - "sudo pacman -U --noconfirm $(ls scenefx0.4/*.pkg.tar.zst | grep -v -- '-debug-')"
   "environment":
@@ -107,9 +78,6 @@
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "install-dep-scenefx0.4-x86_64"
   "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
 - "commands":
   - "cd mangowm && makepkg -c"
   "environment":
@@ -118,9 +86,6 @@
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "build-pkg-mangowm-x86_64"
   "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
 - "commands":
   - "cd openbgpd && makepkg -c"
   "environment":
@@ -129,9 +94,6 @@
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "build-pkg-openbgpd-x86_64"
   "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
 - "commands":
   - "cd polychromatic && makepkg -c"
   "environment":
@@ -140,60 +102,44 @@
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "build-pkg-polychromatic-x86_64"
   "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
 - "commands":
-  - "cp nodemanager-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "cp k3s-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "cp gomplate-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "cp duo_unix/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "cp zen-browser-avx2-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "cp greetd-dms-greeter-git/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "cp dsearch-bin/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "cp scenefx0.4/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "cp mangowm/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "cp openbgpd/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "cp polychromatic/*x86_64*.pkg.tar.zst /repo/x86_64"
-  - "find . -maxdepth 2 -name '*-any.pkg.tar.zst' -exec cp {} /repo/x86_64 +"
-  - "find /repo/x86_64 -name '*-debug-*' -delete"
-  - "repo-add /repo/x86_64/custom.db.tar.gz /repo/x86_64/*pkg.tar.zst"
+  - "cp nodemanager-bin/*x86_64*.pkg.tar.zst repo/x86_64"
+  - "cp k3s-bin/*x86_64*.pkg.tar.zst repo/x86_64"
+  - "cp gomplate-bin/*x86_64*.pkg.tar.zst repo/x86_64"
+  - "cp duo_unix/*x86_64*.pkg.tar.zst repo/x86_64"
+  - "cp zen-browser-avx2-bin/*x86_64*.pkg.tar.zst repo/x86_64"
+  - "cp greetd-dms-greeter-git/*x86_64*.pkg.tar.zst repo/x86_64"
+  - "cp dsearch-bin/*x86_64*.pkg.tar.zst repo/x86_64"
+  - "cp scenefx0.4/*x86_64*.pkg.tar.zst repo/x86_64"
+  - "cp mangowm/*x86_64*.pkg.tar.zst repo/x86_64"
+  - "cp openbgpd/*x86_64*.pkg.tar.zst repo/x86_64"
+  - "cp polychromatic/*x86_64*.pkg.tar.zst repo/x86_64"
+  - "find . -maxdepth 2 -name '*-any.pkg.tar.zst' -exec cp {} repo/x86_64 +"
+  - "find repo/x86_64 -name '*-debug-*' -delete"
+  - "repo-add repo/x86_64/custom.db.tar.gz repo/x86_64/*pkg.tar.zst"
   "environment":
     "CARCH": "x86_64"
     "OPTIONS": "(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)"
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "make-repo-x86_64"
   "pull": true
-  "volumes":
-  - "name": "repo"
-    "path": "/repo"
 - "commands":
-  - "sudo docker build -t reg.dist.svc.cluster.znet:5000/zachfi/aur -f Dockerfile /repo"
+  - "sudo docker build -t reg.dist.svc.cluster.znet:5000/zachfi/aur -f Dockerfile repo"
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "build-image"
   "pull": true
   "volumes":
-  - "name": "repo"
-    "path": "/repo"
-  - "name": "dockersock"
-    "path": "/var/run/docker.sock"
+  - "/var/run/docker.sock:/var/run/docker.sock"
 - "commands":
   - "sudo docker push reg.dist.svc.cluster.znet:5000/zachfi/aur"
   "image": "reg.dist.svc.cluster.znet:5000/zachfi/aur-build:latest"
   "name": "publish-image"
   "pull": true
   "volumes":
-  - "name": "dockersock"
-    "path": "/var/run/docker.sock"
+  - "/var/run/docker.sock:/var/run/docker.sock"
   "when":
-  - "branch": "main"
+    "branch": "main"
     "event": "push"
-"volumes":
-- "name": "repo"
-  "temp": {}
-- "host":
-    "path": "/var/run/docker.sock"
-  "name": "dockersock"
 "when":
-- "branch": "main"
+  "branch": "main"
   "event": "push"
