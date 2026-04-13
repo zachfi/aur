@@ -54,6 +54,7 @@ RUN pacman -Sy --noconfirm && pacman -S --noconfirm --needed \
         glslang \
         libglvnd \
         \
+        \
         # polychromatic runtime deps
         libappindicator \
         python-colorama \
