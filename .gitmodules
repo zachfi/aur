@@ -31,3 +31,6 @@
 [submodule "polychromatic"]
 	path = polychromatic
 	url = https://aur.archlinux.org/polychromatic.git
+[submodule "ktls-utils"]
+	path = ktls-utils
+	url = https://aur.archlinux.org/ktls-utils.git

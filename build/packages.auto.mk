@@ -12,6 +12,7 @@ pkgs = nodemanager-bin \
         scenefx0.4 \
         mangowm \
         openbgpd \
-        polychromatic
+        polychromatic \
+        ktls-utils
 local_deps = scenefx0.4
 

@@ -31,5 +31,6 @@
     'mangowm',
     'openbgpd',
     'polychromatic',
+    'ktls-utils',
   ],
 }
